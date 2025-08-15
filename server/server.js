@@ -1,8 +1,9 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const authRouter = require("./routes/auth/auth-routes");
+import express from "express";
+import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import authRouter from "./routes/auth/auth.routes";
+
 // const { registerUser } = require("./controllers/auth/auth-controller");
 
 //create database connection -> u can also
@@ -11,7 +12,7 @@ mongoose
   .connect(
     "mongodb+srv://mahir_aziiz:mahir_aziiz1233@cluster0.ccfdd.mongodb.net/"
   )
-  .then(() => console.log("Mongoose connected"))
+  .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log(error));
 
 const app = express();

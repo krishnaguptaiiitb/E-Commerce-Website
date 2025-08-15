@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import CheckAuth from "./components/common/Check-auth";
+import CheckAuth from "./components/common/CheckAuth";
 import AuthLayout from "./components/auth/Layout";
 import AuthLogin from "./pages/auth/Login";
 import AuthRegister from "./pages/auth/Register";
