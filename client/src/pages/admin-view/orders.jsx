@@ -1,12 +1,5 @@
-
-
-
-
-
 function AdminOrders() {
-    return ( 
-        <div>Admin Orders</div>
-     );
+  return <div>Admin Orders</div>;
 }
 
 export default AdminOrders;
