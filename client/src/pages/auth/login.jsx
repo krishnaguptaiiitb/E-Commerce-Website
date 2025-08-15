@@ -1,4 +1,4 @@
-import CommonForm from "@/components/common/form";
+import CommonForm from "@/components/common/Form";
 import { loginFormControls } from "@/config";
 import { useState } from "react";
 import { Link } from "react-router-dom";

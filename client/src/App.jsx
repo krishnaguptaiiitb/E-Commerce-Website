@@ -1,19 +1,19 @@
 import { Route, Routes } from "react-router-dom";
-import CheckAuth from "./components/common/check-auth";
-import AuthLayout from "./components/auth/layout";
-import AuthLogin from "./pages/auth/login";
-import AuthRegister from "./pages/auth/register";
-import AdminLayout from "./components/admin-view/layout";
-import AdminDashboard from "./pages/admin-view/dashboard";
-import AdminProducts from "./pages/admin-view/products";
-import AdminOrders from "./pages/admin-view/orders";
-import AdminFeatures from "./pages/admin-view/features";
-import ShoppingLayout from "./components/shopping-view/layout";
-import ShoppingHome from "./pages/shopping-view/home";
-import ShoppingListing from "./pages/shopping-view/listing";
-import ShoppingCheckout from "./pages/shopping-view/checkout";
-import ShoppingAccount from "./pages/shopping-view/account";
-import UnauthPage from "./pages/unauth-page";
+import CheckAuth from "./components/common/Check-auth";
+import AuthLayout from "./components/auth/Layout";
+import AuthLogin from "./pages/auth/Login";
+import AuthRegister from "./pages/auth/Register";
+import AdminLayout from "./components/admin-view/Layout";
+import AdminDashboard from "./pages/admin-view/Dashboard";
+import AdminProducts from "./pages/admin-view/Products";
+import AdminOrders from "./pages/admin-view/Orders";
+import AdminFeatures from "./pages/admin-view/Features";
+import ShoppingLayout from "./components/shopping-view/Layout";
+import ShoppingHome from "./pages/shopping-view/Home";
+import ShoppingListing from "./pages/shopping-view/Listing";
+import ShoppingCheckout from "./pages/shopping-view/Checkout";
+import ShoppingAccount from "./pages/shopping-view/Account";
+import UnauthPage from "./pages/unauth-page/Index";
 import { useSelector } from "react-redux";
 
 function App() {
