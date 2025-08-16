@@ -7,7 +7,7 @@ const initialState = {
   email: "",
   password: "",
 };
-
+ 
 function AuthLogin() {
   const [formData, setFormData] = useState(initialState);
 

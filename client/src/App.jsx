@@ -14,6 +14,8 @@ import ShoppingListing from "./pages/shopping-view/Listing";
 import ShoppingCheckout from "./pages/shopping-view/Checkout";
 import ShoppingAccount from "./pages/shopping-view/Account";
 import UnauthPage from "./pages/unauth-page/Index";
+import PageNotFound from "./pages/page-not-found/PageNotFound";
+
 import { useSelector } from "react-redux";
 
 function App() {
@@ -67,6 +69,7 @@ function App() {
           <Route path="account" element={<ShoppingAccount />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );
