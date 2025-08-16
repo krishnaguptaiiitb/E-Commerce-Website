@@ -14,7 +14,7 @@ function CommonForm({
   formControls,
   formData,
   setFormData,
-  onSubmit,
+  // onSubmit,
   buttonText,
 }) {
   // const types = {

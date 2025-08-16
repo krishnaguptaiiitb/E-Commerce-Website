@@ -1,10 +1,5 @@
-
-
-
 function AdminHeader() {
-    return ( 
-        <div>I am admin header</div>
-     );
+  return <div>I am admin header</div>;
 }
 
 export default AdminHeader;
