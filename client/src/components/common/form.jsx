@@ -12,10 +12,10 @@ import {
 
 function CommonForm({
   formControls,
+  buttonText,
   formData,
   setFormData,
-  // onSubmit,
-  buttonText,
+  onSubmit,
 }) {
   // const types = {
   //     INPUT:'input',
@@ -99,7 +99,7 @@ function CommonForm({
     return element;
   }
   return (
-    <form onSubmit={onsubmit}>
+    <form onSubmit={onSubmit}>
       <div className="flex flex-col gap-3">
         {formControls.map((controlItem) => (
           <div className="grid w-full gap-1.5 " key={controlItem.name}>

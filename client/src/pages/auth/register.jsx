@@ -18,7 +18,7 @@ function AuthRegister() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  function onsubmit(event) {
+  function onSubmit(event) {
     event.preventDefault();
     dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {
@@ -28,7 +28,7 @@ function AuthRegister() {
         navigate("/auth/login");
       } else {
         toast({
-          title: "Registration failed",
+          title: data?.payload?.message || "Registration failed",
           description: data?.error?.message || "An error occured",
           variant: "destructive",
         });
@@ -59,7 +59,7 @@ function AuthRegister() {
         buttonText={"Sign Up"}
         formData={formData}
         setFormData={setFormData}
-        onsubmit={onsubmit}
+        onSubmit={onSubmit}
       />
     </div>
   );

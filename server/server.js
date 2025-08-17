@@ -2,9 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import authRouter from "./routes/auth/auth.routes";
-
-// const { registerUser } = require("./controllers/auth/auth-controller");
+import authRouter from "./routes/auth/auth.routes.js";
 
 //create database connection -> u can also
 //create a separate file for this and then import/use that file here
@@ -21,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 app.use(
   cors({
     origin: "http://localhost:5173",
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
     allowHeaders: [
       "Content-Type",
       "Authorization",

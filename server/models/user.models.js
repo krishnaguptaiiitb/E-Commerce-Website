@@ -14,11 +14,11 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
   },
   role: {
     type: String,
-    default: "User",
+    default: "user",
   },
 });
 
