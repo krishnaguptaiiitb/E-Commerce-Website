@@ -16,10 +16,23 @@ import ShoppingAccount from "./pages/shopping-view/Account";
 import UnauthPage from "./pages/unauth-page/Index";
 import PageNotFound from "./pages/page-not-found/PageNotFound";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { checkAuth } from "./store/auth-slice";
+import { Skeleton } from "./components/ui/skeleton";
 
 function App() {
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, isLoading } = useSelector(
+    (state) => state.auth
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+  if (isLoading) {
+    return <Skeleton className="h-[600px] w-[600px] rounded-full" />;
+  }
   // const user = null;
   // const user = {
   //   name: "mahir",
