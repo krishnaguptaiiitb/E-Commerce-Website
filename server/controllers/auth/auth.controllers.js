@@ -2,14 +2,10 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../../models/user.models.js";
 
-//register
+// Register Users
 const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
-  if (!username || !email || !password) {
-    return res
-      .status(400)
-      .json({ success: false, message: "All fields are required" });
-  }
+
   try {
     const checkUser = await User.findOne({ email });
     if (checkUser) {
@@ -26,12 +22,24 @@ const registerUser = async (req, res) => {
     });
     await newUser.save();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Registration Successful",
+      user: {
+        username: newUser.username,
+        email: newUser.email,
+        role: newUser.role,
+        id: newUser._id,
+      },
     });
   } catch (e) {
     console.log(e);
+    if (e.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: "Email or username already exists",
+      });
+    }
     res.status(500).json({
       success: false,
       message: "Some error occured",
@@ -39,7 +47,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-//login
+//Login Users
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -51,6 +59,7 @@ const loginUser = async (req, res) => {
         message: "User not found! Please register first",
       });
     }
+
     const isPasswordValid = await bcrypt.compare(password, checkUser.password);
     if (!isPasswordValid) {
       return res.status(401).json({
@@ -69,7 +78,7 @@ const loginUser = async (req, res) => {
         expiresIn: "1h",
       }
     );
-    res
+    return res
       .cookie("token", token, {
         httpOnly: true,
         secure: false,
@@ -85,21 +94,21 @@ const loginUser = async (req, res) => {
       });
   } catch (e) {
     console.log(e);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Some error occured",
     });
   }
 };
-//logout
+//Logout users
 const logoutUser = (req, res) => {
-  res.clearCookie("token").json({
+  return res.clearCookie("token").json({
     success: true,
     message: "Logged out successfully!",
   });
 };
 
-//auth-middleware
+//Auth-Middleware
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {

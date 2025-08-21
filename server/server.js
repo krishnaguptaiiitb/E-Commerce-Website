@@ -20,7 +20,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
-    allowHeaders: [
+    allowedHeaders: [
       "Content-Type",
       "Authorization",
       "Cache-Control",
@@ -33,7 +33,7 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
-app.use("/api/auth/users", authRouter);
+app.use("/api/auth", authRouter);
 // /api/auth/register -> registerUser
 // /api/auth/login -> loginUser
 app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));
