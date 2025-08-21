@@ -5,9 +5,13 @@ import { User } from "../../models/user.models.js";
 //register
 const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
-
+  if (!username || !email || !password) {
+    return res
+      .status(400)
+      .json({ success: false, message: "All fields are required" });
+  }
   try {
-    const checkUser = await findOne({ email });
+    const checkUser = await User.findOne({ email });
     if (checkUser) {
       return res.json({
         success: false,
@@ -58,7 +62,7 @@ const loginUser = async (req, res) => {
       {
         id: checkUser._id,
         role: checkUser.role,
-        email: checkUser.password,
+        email: checkUser.email,
       },
       "CLIENT_SECRET_KEY",
       {
@@ -79,12 +83,6 @@ const loginUser = async (req, res) => {
           id: checkUser._id,
         },
       });
-
-    res.status(200).json({
-      success: true,
-      message: "Login successful",
-      token,
-    });
   } catch (e) {
     console.log(e);
     res.status(500).json({
@@ -102,12 +100,11 @@ const logoutUser = (req, res) => {
 };
 
 //auth-middleware
-
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
     return res.status(401).json({
-      sucess: false,
+      success: false,
       message: "Unauthorised user!",
     });
   }
@@ -117,7 +114,7 @@ const authMiddleware = async (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    res.status(401).json({
+    return res.status(401).json({
       success: false,
       message: "Unauthorized user!",
     });

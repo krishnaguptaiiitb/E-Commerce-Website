@@ -33,7 +33,7 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
-app.use("/api/auth", authRouter);
+app.use("/api/auth/users", authRouter);
 // /api/auth/register -> registerUser
 // /api/auth/login -> loginUser
 app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));
