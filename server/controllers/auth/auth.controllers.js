@@ -100,6 +100,7 @@ const loginUser = async (req, res) => {
     });
   }
 };
+
 //Logout users
 const logoutUser = (req, res) => {
   return res.clearCookie("token").json({
