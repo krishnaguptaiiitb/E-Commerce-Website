@@ -17,10 +17,6 @@ function CommonForm({
   setFormData,
   onSubmit,
 }) {
-  // const types = {
-  //     INPUT:'input',
-  //     SELECT:'select',
-  // }
   function renderInputsByComponentType(getControlItem) {
     let element = null;
     const value = formData[getControlItem.name] || "";
@@ -55,7 +51,7 @@ function CommonForm({
             value={value}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={getControlItem.placeholder} />
+              <SelectValue placeholder={getControlItem.label} />
             </SelectTrigger>
             <SelectContent>
               {getControlItem.options && getControlItem.options.length > 0

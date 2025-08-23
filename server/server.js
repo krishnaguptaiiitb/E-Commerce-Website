@@ -3,13 +3,15 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import authRouter from "./routes/auth/auth.routes.js";
+import adminProductRouter from "./routes/admin/products.routes.js";
+
+import dotenv from "dotenv";
+dotenv.config();
 
 //create database connection -> u can also
 //create a separate file for this and then import/use that file here
 mongoose
-  .connect(
-    "mongodb+srv://mahir_aziiz:mahir_aziiz1233@cluster0.ccfdd.mongodb.net/"
-  )
+  .connect(process.env.MONGODB_URL)
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log(error));
 
@@ -34,6 +36,7 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRouter);
+app.use("/api/admin/products", adminProductRouter);
 // /api/auth/register -> registerUser
 // /api/auth/login -> loginUser
 app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));
