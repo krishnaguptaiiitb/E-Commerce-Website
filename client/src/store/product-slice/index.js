@@ -13,7 +13,7 @@ export const addNewProduct = createAsyncThunk(
       "http://localhost:5000/api/admin/products/add",
       formData,
       {
-        header: {
+        headers: {
           "Content-Type": "application/json",
         },
       }
@@ -26,7 +26,7 @@ export const fetchAllProducts = createAsyncThunk(
   "/products/fetchAllProducts",
   async () => {
     const result = await axios.get(
-      "http://localhost:5000/api/admin/products/get"
+      "http://localhost:5000/api/admin/products/fetchProduct"
     );
     return result.data;
   }
@@ -39,7 +39,7 @@ export const editProduct = createAsyncThunk(
       `http://localhost:5000/api/admin/products/edit/${id}`,
       formData,
       {
-        header: {
+        headers: {
           "Content-Type": "application/json",
         },
       }
@@ -57,6 +57,7 @@ export const deleteProduct = createAsyncThunk(
     return result.data;
   }
 );
+
 const AdminProductSlice = createSlice({
   name: "adminProducts",
   initialState,
@@ -68,12 +69,11 @@ const AdminProductSlice = createSlice({
       })
       .addCase(fetchAllProducts.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.productList = [];
+        state.productList = action.payload.data;
       })
       .addCase(fetchAllProducts.rejected, (state, action) => {
-        console.log(action.payload);
         state.isLoading = false;
-        state.productList = action.payload;
+        state.productList = [];
       });
   },
 });
