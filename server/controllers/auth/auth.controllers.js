@@ -72,8 +72,9 @@ const loginUser = async (req, res) => {
         id: checkUser._id,
         role: checkUser.role,
         email: checkUser.email,
+        username: checkUser.username,
       },
-      "CLIENT_SECRET_KEY",
+      "ACCESS_TOKEN_SECRET",
       {
         expiresIn: "1h",
       }
@@ -90,6 +91,7 @@ const loginUser = async (req, res) => {
           email: checkUser.email,
           role: checkUser.role,
           id: checkUser._id,
+          username: checkUser.username,
         },
       });
   } catch (e) {
@@ -120,7 +122,7 @@ const authMiddleware = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+    const decoded = jwt.verify(token, "ACCESS_TOKEN_SECRET");
     req.user = decoded;
     next();
   } catch (error) {
