@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 function CommonForm({
   formControls,
@@ -80,6 +81,32 @@ function CommonForm({
               })
             }
           />
+        );
+        break;
+      case "radio":
+        element = (
+          <RadioGroup
+            value={value}
+            onValueChange={(value) => {
+              // Update form state when selection changes
+              setFormData((formData) => ({
+                ...formData,
+                [getControlItem.name]: value,
+              }));
+            }}
+          >
+            {getControlItem.options?.map((optionItem) => (
+              <div key={optionItem.id} className="flex items-center space-x-2">
+                <RadioGroupItem
+                  value={optionItem.value}
+                  id={`${getControlItem.name}-${optionItem.value}`}
+                />
+                <Label htmlFor={`${getControlItem.name}-${optionItem.value}`}>
+                  {optionItem.label}
+                </Label>
+              </div>
+            ))}
+          </RadioGroup>
         );
         break;
       default:

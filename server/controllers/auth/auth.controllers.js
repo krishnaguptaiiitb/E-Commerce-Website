@@ -4,7 +4,22 @@ import { User } from "../../models/user.models.js";
 
 // Register Users
 const registerUser = async (req, res) => {
-  const { username, email, password } = req.body;
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    password,
+    phone,
+    dateOfBirth,
+    gender,
+    country,
+    city,
+    zipCode,
+    terms,
+    profileType,
+    bio,
+  } = req.body;
 
   try {
     const checkUser = await User.findOne({ email });
@@ -16,9 +31,20 @@ const registerUser = async (req, res) => {
     }
     const hashPassword = await bcrypt.hash(password, 12);
     const newUser = new User({
+      firstName,
+      lastName,
       username,
       email,
       password: hashPassword,
+      phone,
+      dateOfBirth,
+      gender,
+      country,
+      city,
+      zipCode,
+      terms,
+      profileType,
+      bio,
     });
     await newUser.save();
 

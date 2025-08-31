@@ -30,6 +30,7 @@ function App() {
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
+
   if (isLoading) {
     return <Skeleton className="h-[600px] w-[600px] rounded-full" />;
   }
@@ -45,7 +46,7 @@ function App() {
       <h1>Header component</h1>
       <Routes>
         <Route
-          path="auth"
+          path="/auth"
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AuthLayout />

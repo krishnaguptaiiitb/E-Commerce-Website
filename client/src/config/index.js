@@ -1,10 +1,40 @@
 export const registerFormControls = [
   {
-    name: "username",
-    label: "User Name:",
-    placeholder: "Enter your username",
+    name: "firstName",
+    label: "First Name:",
+    placeholder: "Enter your first name",
     componentType: "input",
     type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+      maxLength: 50,
+    },
+  },
+  {
+    name: "lastName",
+    label: "Last Name:",
+    placeholder: "Enter your last name",
+    componentType: "input",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 2,
+      maxLength: 50,
+    },
+  },
+  {
+    name: "username",
+    label: "Username:",
+    placeholder: "Choose a username",
+    componentType: "input",
+    type: "text",
+    validation: {
+      required: true,
+      minLength: 3,
+      maxLength: 20,
+      pattern: /^[a-zA-Z0-9_]+$/,
+    },
   },
   {
     name: "email",
@@ -12,13 +42,147 @@ export const registerFormControls = [
     placeholder: "Enter your email",
     componentType: "input",
     type: "email",
+    validation: {
+      required: true,
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    },
   },
   {
     name: "password",
     label: "Password:",
-    placeholder: "Enter your password",
+    placeholder: "Create a password",
     componentType: "input",
     type: "password",
+    validation: {
+      required: true,
+      minLength: 8,
+      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
+    },
+  },
+  {
+    name: "confirmPassword",
+    label: "Confirm Password:",
+    placeholder: "Confirm your password",
+    componentType: "input",
+    type: "password",
+    validation: {
+      required: true,
+      validate: (value, allValues) => value === allValues.password,
+    },
+  },
+  {
+    name: "phone",
+    label: "Phone Number:",
+    placeholder: "Enter your phone number",
+    componentType: "input",
+    type: "tel",
+    validation: {
+      required: false,
+      pattern: /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/,
+    },
+  },
+  {
+    name: "dateOfBirth",
+    label: "Date of Birth:",
+    componentType: "input",
+    type: "date",
+    validation: {
+      required: true,
+      validate: (value) => {
+        const birthDate = new Date(value);
+        const today = new Date();
+        const age = today.getFullYear() - birthDate.getFullYear();
+        return age >= 13;
+      },
+    },
+  },
+  {
+    name: "gender",
+    label: "Gender:",
+    componentType: "select",
+    options: [
+      { value: "", label: "Select gender" },
+      { value: "male", label: "Male" },
+      { value: "female", label: "Female" },
+      { value: "other", label: "Other" },
+      { value: "prefer_not_to_say", label: "Prefer not to say" },
+    ],
+    validation: {
+      required: false,
+    },
+  },
+  {
+    name: "country",
+    label: "Country:",
+    componentType: "select",
+    options: [
+      { value: "", label: "Select your country" },
+      { value: "us", label: "United States" },
+      { value: "ca", label: "Canada" },
+      { value: "uk", label: "United Kingdom" },
+      { value: "au", label: "Australia" },
+      { value: "de", label: "Germany" },
+      { value: "fr", label: "France" },
+      { value: "in", label: "India" },
+      // Add more countries as needed
+    ],
+    validation: {
+      required: true,
+    },
+  },
+  {
+    name: "city",
+    label: "City:",
+    placeholder: "Enter your city",
+    componentType: "input",
+    type: "text",
+    validation: {
+      required: false,
+    },
+  },
+  {
+    name: "zipCode",
+    label: "Zip/Postal Code:",
+    placeholder: "Enter your zip code",
+    componentType: "input",
+    type: "text",
+    validation: {
+      required: false,
+      pattern: /^[0-9]{5}(-[0-9]{4})?$/,
+    },
+  },
+  {
+    name: "terms",
+    label: "I agree to the terms and conditions",
+    componentType: "checkbox",
+    type: "checkbox",
+    validation: {
+      required: true,
+    },
+  },
+  {
+    name: "profileType",
+    label: "Profile Type:",
+    componentType: "radio",
+    options: [
+      { value: "personal", label: "Personal Account" },
+      { value: "business", label: "Business Account" },
+      { value: "developer", label: "Developer Account" },
+    ],
+    validation: {
+      required: true,
+    },
+  },
+  {
+    name: "bio",
+    label: "Bio:",
+    placeholder: "Tell us about yourself...",
+    componentType: "textarea",
+    rows: 4,
+    validation: {
+      required: false,
+      maxLength: 500,
+    },
   },
 ];
 

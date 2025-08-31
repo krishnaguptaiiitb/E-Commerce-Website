@@ -7,9 +7,21 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 const initialState = {
+  firstName: "",
+  lastName: "",
   username: "",
   email: "",
   password: "",
+  confirmPassword: "",
+  phone: "",
+  dateOfBirth: "",
+  gender: "",
+  country: "",
+  city: "",
+  zipCode: "",
+  terms: "",
+  profileType: "",
+  bio: "",
 };
 
 function AuthRegister() {
