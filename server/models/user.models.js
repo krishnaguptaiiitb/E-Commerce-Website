@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   phone: {
-    type: Number,
+    type: String,
     required: true,
   },
   dateOfBirth: {
@@ -48,7 +48,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   terms: {
-    type: String,
+    type: Boolean,
     required: true,
   },
   profileType: {
@@ -62,7 +62,7 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    default: "admin",
+    default: "user",
   },
 });
 

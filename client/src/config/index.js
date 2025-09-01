@@ -77,7 +77,7 @@ export const registerFormControls = [
     componentType: "input",
     type: "tel",
     validation: {
-      required: false,
+      required: true,
       pattern: /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/,
     },
   },
@@ -108,7 +108,7 @@ export const registerFormControls = [
       { value: "prefer_not_to_say", label: "Prefer not to say" },
     ],
     validation: {
-      required: false,
+      required: true,
     },
   },
   {
@@ -137,7 +137,7 @@ export const registerFormControls = [
     componentType: "input",
     type: "text",
     validation: {
-      required: false,
+      required: true,
     },
   },
   {
@@ -147,13 +147,14 @@ export const registerFormControls = [
     componentType: "input",
     type: "text",
     validation: {
-      required: false,
+      required: true,
       pattern: /^[0-9]{5}(-[0-9]{4})?$/,
     },
   },
   {
     name: "terms",
-    label: "I agree to the terms and conditions",
+    label: "Terms:",
+    placeholder: "I agree to the terms and conditions",
     componentType: "checkbox",
     type: "checkbox",
     validation: {
@@ -180,7 +181,7 @@ export const registerFormControls = [
     componentType: "textarea",
     rows: 4,
     validation: {
-      required: false,
+      required: true,
       maxLength: 500,
     },
   },

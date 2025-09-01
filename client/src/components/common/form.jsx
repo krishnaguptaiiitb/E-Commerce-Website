@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { Checkbox } from "../ui/checkbox";
 
 function CommonForm({
   formControls,
@@ -107,6 +108,25 @@ function CommonForm({
               </div>
             ))}
           </RadioGroup>
+        );
+        break;
+      case "checkbox":
+        element = (
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              checked={value} // Make sure this is boolean
+              onCheckedChange={(checked) => {
+                setFormData((formData) => ({
+                  ...formData,
+                  [getControlItem.name]: checked, // Use boolean value
+                }));
+              }}
+              id={getControlItem.name}
+            />
+            <Label htmlFor={getControlItem.name}>
+              {getControlItem.placeholder}
+            </Label>
+          </div>
         );
         break;
       default:

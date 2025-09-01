@@ -7,21 +7,21 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 const initialState = {
-  firstName: "",
-  lastName: "",
-  username: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  phone: "",
-  dateOfBirth: "",
-  gender: "",
-  country: "",
-  city: "",
-  zipCode: "",
-  terms: "",
-  profileType: "",
-  bio: "",
+  firstName: "John",
+  lastName: "Doe",
+  username: "johndoe123",
+  email: "john@example.com",
+  password: "Password123",
+  confirmPassword: "Password123",
+  phone: "8181812929",
+  dateOfBirth: "1990-01-01",
+  gender: "male",
+  country: "us",
+  city: "New York",
+  zipCode: "10001",
+  terms: true, // MUST be boolean true
+  profileType: "personal",
+  bio: "Test user",
 };
 
 function AuthRegister() {
@@ -32,6 +32,7 @@ function AuthRegister() {
 
   function onSubmit(event) {
     event.preventDefault();
+    console.log(formData);
     dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {
         toast({
@@ -45,10 +46,9 @@ function AuthRegister() {
           variant: "destructive",
         });
       }
-      console.log(data);
+      console.log("Register response:", data);
     });
   }
-  console.log(formData);
 
   return (
     <div className="mx-auto w-full max-w-md space-y-6">

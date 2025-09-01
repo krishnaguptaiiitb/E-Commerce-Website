@@ -8,9 +8,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
+import { fetchAllFilteredProducts } from "@/store/shop/products-slice";
 import { ArrowUpDownIcon } from "lucide-react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function ShoppingListing() {
+  const dispatch = useDispatch();
+  const { productList } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(fetchAllFilteredProducts());
+  }, [dispatch]);
+  console.log(productList);
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6 md:p-6">
       <ProductFilter />
@@ -45,6 +55,7 @@ function ShoppingListing() {
             </DropdownMenu>
           </div>
         </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4"></div>
       </div>
     </div>
   );
