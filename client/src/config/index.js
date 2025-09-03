@@ -314,6 +314,23 @@ export const shoppingViewHeaderMenuItems = [
   },
 ];
 
+export const categoryOptionMap = {
+  men: "Men",
+  women: "Women",
+  kids: "Kids",
+  accessorries: "Accessories",
+  footwear: "Footwear",
+};
+
+export const brandOptionMap = {
+  nike: "Nike",
+  adidas: "Adidas",
+  puma: "Puma",
+  levis: "Levis",
+  zara: "Zara",
+  "h&m": "H&M",
+};
+
 export const filterOptions = {
   category: [
     { id: "men", label: "Men" },
