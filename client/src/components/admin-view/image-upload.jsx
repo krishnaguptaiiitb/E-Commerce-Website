@@ -87,13 +87,13 @@ function ProductImageUpload({
           disabled={isEditMode}
           onChange={handleImageFileChange}
         />
-        
+
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
             className={`${
               isEditMode ? "cursor-not-allowed" : ""
-            } flex flex-col item-center h-32 cursor-pointer`}
+            } flex flex-col items-center h-32 cursor-pointer`}
           >
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
             <span>Drag & drop or Click to upload</span>

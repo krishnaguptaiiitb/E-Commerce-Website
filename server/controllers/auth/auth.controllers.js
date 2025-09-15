@@ -22,10 +22,22 @@ const registerUser = async (req, res) => {
   } = req.body;
 
   try {
-    console.log('📥 Received registration data:', JSON.stringify(req.body, null, 2));
+    console.log(
+      "📥 Received registration data:",
+      JSON.stringify(req.body, null, 2)
+    );
 
-    // 1. Validate required fields
-    if (!firstName || !lastName || !username || !email || !password || !dateOfBirth || !country || !profileType || terms === undefined) {
+    if (
+      !firstName ||
+      !lastName ||
+      !username ||
+      !email ||
+      !password ||
+      !dateOfBirth ||
+      !country ||
+      !profileType ||
+      terms === undefined
+    ) {
       return res.status(400).json({
         success: false,
         message: "Missing required fields",
@@ -38,37 +50,34 @@ const registerUser = async (req, res) => {
           dateOfBirth: !dateOfBirth,
           country: !country,
           profileType: !profileType,
-          terms: terms === undefined
-        }
+          terms: terms === undefined,
+        },
       });
     }
 
-    // 2. Validate terms acceptance
     if (terms !== true) {
       return res.status(400).json({
         success: false,
-        message: "You must accept the terms and conditions"
+        message: "You must accept the terms and conditions",
       });
     }
 
-    // 3. Check for existing user
     const existingUser = await User.findOne({
-      $or: [{ email }, { username }]
+      $or: [{ email }, { username }],
     });
 
     if (existingUser) {
       return res.status(409).json({
         success: false,
-        message: existingUser.email === email 
-          ? "User already exists with this email" 
-          : "Username already taken"
+        message:
+          existingUser.email === email
+            ? "User already exists with this email"
+            : "Username already taken",
       });
     }
 
-    // 4. Hash password
     const hashPassword = await bcrypt.hash(password, 12);
 
-    // 5. Create user with sanitized data
     const newUser = new User({
       firstName: firstName.trim(),
       lastName: lastName.trim(),
@@ -86,12 +95,9 @@ const registerUser = async (req, res) => {
       bio: bio ? bio.trim() : undefined,
     });
 
-    // 6. Save user
     await newUser.save();
+    console.log("✅ User registered successfully:", newUser.username);
 
-    console.log('✅ User registered successfully:', newUser.email);
-
-    // 7. Return success response
     return res.status(201).json({
       success: true,
       message: "Registration Successful",
@@ -102,17 +108,16 @@ const registerUser = async (req, res) => {
         id: newUser._id,
       },
     });
-
   } catch (error) {
-    console.error('❌ Registration error:', error);
-    
+    console.error("❌ Registration error:", error);
+
     // Handle duplicate key errors
     if (error.code === 11000) {
       const field = Object.keys(error.keyValue)[0];
       return res.status(400).json({
         success: false,
         message: `${field} already exists`,
-        field: field
+        field: field,
       });
     }
   }

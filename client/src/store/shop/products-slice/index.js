@@ -16,6 +16,7 @@ export const fetchAllFilteredProducts = createAsyncThunk(
     return response.data;
   }
 );
+
 const shoppingProductSlice = createSlice({
   name: "shoppingProducts",
   initialState,
@@ -27,7 +28,6 @@ const shoppingProductSlice = createSlice({
       })
       .addCase(fetchAllFilteredProducts.fulfilled, (state, action) => {
         console.log(action.payload);
-
         state.isLoading = false;
         state.productList = action.payload;
       })

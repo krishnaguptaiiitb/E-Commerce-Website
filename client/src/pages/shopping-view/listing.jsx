@@ -9,15 +9,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
-import { fetchAllFilteredProducts } from "@/store/shop/products-slice";
+import { fetchAllFilteredProducts } from "@/store/shop/products-slice/index.js";
 import { ArrowUpDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 
 function createSearchParamsHelper(filterParams) {
   const queryParams = [];
-
   for (const [key, value] of Object.keys(filterParams)) {
     if (Array.isArray(value) && value.length > 0) {
       const paramValue = value.join(",");
@@ -32,7 +31,7 @@ function ShoppingListing() {
   const { productList } = useSelector((state) => state.shopProducts);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   function handleSort(value) {
     console.log(value);
@@ -40,7 +39,7 @@ function ShoppingListing() {
   }
 
   function handleFilter(getSectionId, getCurrentOption) {
-    let copyFilters = filters;
+    let copyFilters = { ...filters };
     const indexOfCurrentSection =
       Object.keys(copyFilters).indexOf(getSectionId);
 
@@ -70,7 +69,7 @@ function ShoppingListing() {
 
   useEffect(() => {
     dispatch(fetchAllFilteredProducts());
-  }, [dispatch]);
+  }, [dispatch, filters, sort]);
 
   console.log(productList, "ProductList");
   console.log(filters, searchParams, "searchParams", "filters");
@@ -79,6 +78,8 @@ function ShoppingListing() {
     if (filters && Object.keys(filters).length > 0) {
       const createQueryString = createSearchParamsHelper(filters);
       setSearchParams(new URLSearchParams(createQueryString));
+    } else {
+      setSearchParams(new URLSearchParams()); // clears all params
     }
   }, [filters]);
 
@@ -122,7 +123,10 @@ function ShoppingListing() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4 lg:grid-col-4">
           {productList && productList.length > 0
             ? productList.map((productItem) => (
-                <ShoppingProductTile product={productItem} />
+                <ShoppingProductTile
+                  key={productItem._id}
+                  product={productItem}
+                />
               ))
             : null}
         </div>
