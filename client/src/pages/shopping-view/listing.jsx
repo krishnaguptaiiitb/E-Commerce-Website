@@ -1,4 +1,5 @@
 import ProductFilter from "@/components/shopping-view/Filter";
+import ProductDetailsDialog from "@/components/shopping-view/productDetails";
 import ShoppingProductTile from "@/components/shopping-view/ProductTile";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,7 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
-import { fetchAllFilteredProducts } from "@/store/shop/products-slice/index.js";
+import {
+  fetchAllFilteredProducts,
+  fetchProductDetails,
+} from "@/store/shop/products-slice/index.js";
 import { ArrowUpDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,21 +21,25 @@ import { useSearchParams } from "react-router-dom";
 
 function createSearchParamsHelper(filterParams) {
   const queryParams = [];
-  for (const [key, value] of Object.keys(filterParams)) {
+  for (const [key, value] of Object.entries(filterParams)) {
     if (Array.isArray(value) && value.length > 0) {
       const paramValue = value.join(",");
       queryParams.push(`${key}=${encodeURIComponent(paramValue)}`);
     }
   }
+  console.log(queryParams, "queryParams");
   return queryParams.join("&");
 }
 
 function ShoppingListing() {
   const dispatch = useDispatch();
-  const { productList } = useSelector((state) => state.shopProducts);
+  const { productList, productDetails } = useSelector(
+    (state) => state.shopProducts
+  );
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
 
   function handleSort(value) {
     console.log(value);
@@ -40,26 +48,31 @@ function ShoppingListing() {
 
   function handleFilter(getSectionId, getCurrentOption) {
     let copyFilters = { ...filters };
-    const indexOfCurrentSection =
-      Object.keys(copyFilters).indexOf(getSectionId);
 
-    if (indexOfCurrentSection === -1) {
-      copyFilters = {
-        ...copyFilters,
-        [getSectionId]: [getCurrentOption],
-      };
+    if (!copyFilters[getSectionId]) {
+      copyFilters[getSectionId] = [getCurrentOption];
     } else {
       const indexOfCurrentOption =
         copyFilters[getSectionId].indexOf(getCurrentOption);
 
-      if (indexOfCurrentSection === -1) {
+      if (indexOfCurrentOption === -1) {
         copyFilters[getSectionId].push(getCurrentOption);
       } else {
-        copyFilters[getSectionId].splice(indexOfCurrentOption, 1);
+        copyFilters[getSectionId] = copyFilters[getSectionId].filter(
+          (item) => item !== getCurrentOption
+        );
+        if (copyFilters[getSectionId].length === 0) {
+          delete copyFilters[getSectionId];
+        }
       }
     }
     setFilters(copyFilters);
     sessionStorage.setItem("filters", JSON.stringify(copyFilters));
+  }
+
+  function handleGetProductDetails(getCurrentProductId) {
+    console.log(getCurrentProductId);
+    dispatch(fetchProductDetails(getCurrentProductId));
   }
 
   useEffect(() => {
@@ -68,11 +81,21 @@ function ShoppingListing() {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchAllFilteredProducts());
+    if (filters !== null && sort !== null)
+      dispatch(
+        fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
+      );
   }, [dispatch, filters, sort]);
 
+  useEffect(() => {
+    if (productDetails !== null) {
+      setOpenDetailsDialog(true);
+    }
+  }, [productDetails]);
+
   console.log(productList, "ProductList");
-  console.log(filters, searchParams, "searchParams", "filters");
+  console.log(productDetails, "ProductDetails");
+  console.log(filters, searchParams.toString(), "searchParams", "filters");
 
   useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {
@@ -101,10 +124,7 @@ function ShoppingListing() {
                   size="sm"
                   className="flex items-center gap-1"
                 >
-                  <ArrowUpDownIcon
-                    className="h-4
-                 w-4"
-                  />
+                  <ArrowUpDownIcon className="h-4 w-4" />
                   <span>Sort by</span>
                 </Button>
               </DropdownMenuTrigger>
@@ -126,11 +146,17 @@ function ShoppingListing() {
                 <ShoppingProductTile
                   key={productItem._id}
                   product={productItem}
+                  handleGetProductDetails={handleGetProductDetails}
                 />
               ))
             : null}
         </div>
       </div>
+      <ProductDetailsDialog
+        open={openDetailsDialog}
+        setOpen={setOpenDetailsDialog}
+        productDetails={productDetails}
+      />
     </div>
   );
 }

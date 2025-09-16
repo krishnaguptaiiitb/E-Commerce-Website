@@ -17,7 +17,7 @@ import {
   fetchAllProducts,
 } from "@/store/admin/product-slice";
 import { useToast } from "@/hooks/useToast";
-import AdminProductTile from "@/components/admin-view/product-tile";
+import AdminProductTile from "@/components/admin-view/ProductTile";
 
 const initialFormData = {
   image: null,
