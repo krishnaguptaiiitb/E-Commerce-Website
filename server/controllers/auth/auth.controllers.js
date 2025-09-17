@@ -4,122 +4,49 @@ import { User } from "../../models/user.models.js";
 
 // Register Users
 const registerUser = async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    username,
-    email,
-    password,
-    phone,
-    dateOfBirth,
-    gender,
-    country,
-    city,
-    zipCode,
-    terms,
-    profileType,
-    bio,
-  } = req.body;
+  const { email, username, password } = req.body;
+
+  if (!email || !username || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Please enter all required credentials.",
+    });
+  }
 
   try {
-    console.log(
-      "📥 Received registration data:",
-      JSON.stringify(req.body, null, 2)
-    );
-
-    if (
-      !firstName ||
-      !lastName ||
-      !username ||
-      !email ||
-      !password ||
-      !dateOfBirth ||
-      !country ||
-      !profileType ||
-      terms === undefined
-    ) {
-      return res.status(400).json({
-        success: false,
-        message: "Missing required fields",
-        missingFields: {
-          firstName: !firstName,
-          lastName: !lastName,
-          username: !username,
-          email: !email,
-          password: !password,
-          dateOfBirth: !dateOfBirth,
-          country: !country,
-          profileType: !profileType,
-          terms: terms === undefined,
-        },
-      });
-    }
-
-    if (terms !== true) {
-      return res.status(400).json({
-        success: false,
-        message: "You must accept the terms and conditions",
-      });
-    }
-
-    const existingUser = await User.findOne({
-      $or: [{ email }, { username }],
-    });
-
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({
         success: false,
-        message:
-          existingUser.email === email
-            ? "User already exists with this email"
-            : "Username already taken",
+        message: "User already registered.",
       });
     }
 
-    const hashPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      username: username.trim(),
-      email: email.toLowerCase().trim(),
-      password: hashPassword,
-      phone: phone ? phone.trim() : undefined,
-      dateOfBirth: new Date(dateOfBirth),
-      gender: gender || undefined,
-      country: country.trim(),
-      city: city ? city.trim() : undefined,
-      zipCode: zipCode ? zipCode.trim() : undefined,
-      terms: Boolean(terms),
-      profileType,
-      bio: bio ? bio.trim() : undefined,
+      username,
+      email,
+      password: hashedPassword,
     });
 
     await newUser.save();
-    console.log("✅ User registered successfully:", newUser.username);
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
-      message: "Registration Successful",
       user: {
+        id: newUser._id,
         username: newUser.username,
         email: newUser.email,
-        role: newUser.role,
-        id: newUser._id,
       },
+      message: "Registration successful.",
     });
   } catch (error) {
-    console.error("❌ Registration error:", error);
-
-    // Handle duplicate key errors
-    if (error.code === 11000) {
-      const field = Object.keys(error.keyValue)[0];
-      return res.status(400).json({
-        success: false,
-        message: `${field} already exists`,
-        field: field,
-      });
-    }
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred during registration.",
+    });
   }
 };
 

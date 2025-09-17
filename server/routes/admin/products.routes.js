@@ -5,7 +5,7 @@ import {
   editProduct,
   fetchAllProducts,
   deleteProduct,
-} from "../../controllers/admin/products.controller.js";
+} from "../../controllers/admin/products.controllers.js";
 import { upload } from "../../utils/cloudinary.js";
 
 const router = express.Router();

@@ -7,21 +7,9 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 const initialState = {
-  firstName: "John",
-  lastName: "Doe",
-  username: "johndoe123",
-  email: "john@example.com",
-  password: "Password123",
-  confirmPassword: "Password123",
-  phone: "8181812929",
-  dateOfBirth: "1990-01-01",
-  gender: "male",
-  country: "us",
-  city: "New York",
-  zipCode: "10001",
-  terms: true, // MUST be boolean true
-  profileType: "personal",
-  bio: "Test user",
+  username: "",
+  email: "",
+  password: "",
 };
 
 function AuthRegister() {

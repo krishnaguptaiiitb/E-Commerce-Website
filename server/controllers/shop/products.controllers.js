@@ -3,7 +3,6 @@ import { Product } from "../../models/product.models.js";
 const getFilterProducts = async (req, res) => {
   try {
     const { category = [], brand = [], sortBy = "price-lowtohigh" } = req.query;
-
     const filters = {};
     if (category.length) {
       filters.category = { $in: category.split(",") };
@@ -52,16 +51,16 @@ const getProductDetails = async (req, res) => {
     const {} = req.params;
     const product = await Product.findById(id);
 
-    if(!product) {
+    if (!product) {
       return res.status(404).json({
         success: false,
-        message: "Product not found"
-      })
+        message: "Product not found",
+      });
     }
     res.status(200).json({
       success: true,
-      data: product
-    })
+      data: product,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
