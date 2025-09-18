@@ -1,23 +1,23 @@
-import { Fragment, useEffect, useState } from "react";
+import ProductImageUpload from "@/components/admin-view/ImageUpload";
+import AdminProductTile from "@/components/admin-view/ProductTile";
+import CommonForm from "@/components/common/Form";
+import { addProductFormElement } from "@/config";
 import { Button } from "@/components/ui/button";
+import {
+  addNewProduct,
+  deleteProduct,
+  editProduct,
+  fetchAllProducts,
+} from "@/store/admin/product-slice/index.js";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import CommonForm from "@/components/common/Form";
-import { addProductFormElement } from "@/config";
-import ProductImageUpload from "@/components/admin-view/image-upload";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addNewProduct,
-  deleteProduct,
-  editProduct,
-  fetchAllProducts,
-} from "@/store/admin/product-slice";
-import { useToast } from "@/hooks/useToast";
-import AdminProductTile from "@/components/admin-view/ProductTile";
+import { Fragment, useEffect, useState } from "react";
+import { useToast } from "@/hooks/useToast.js";
 
 const initialFormData = {
   image: null,
@@ -25,8 +25,8 @@ const initialFormData = {
   description: "",
   category: "",
   brand: "",
-  price: 0,
-  salePrice: "",
+  price: "",
+  salePrice: 0,
   totalStock: "",
 };
 
@@ -67,7 +67,6 @@ function AdminProducts() {
         ).then((data) => {
           console.log(data);
           if (data?.payload?.success) {
-            dispatch(addNewProduct());
             setOpenCreateProductDialog(false);
             setImageFile(null);
             setFormData(initialFormData);
@@ -108,7 +107,7 @@ function AdminProducts() {
         {productList && productList.length > 0
           ? productList.map((productItem) => (
               <AdminProductTile
-                key={productItem.id || productItem._id} // I added it later when getting error
+                key={productItem._id}
                 setOpenCreateProductDialog={setOpenCreateProductDialog}
                 setFormData={setFormData}
                 setCurrentEditedId={setCurrentEditedId}
@@ -126,7 +125,7 @@ function AdminProducts() {
           setFormData(initialFormData);
         }}
       >
-        <SheetContent side="right" className="overflow-auto">
+        <SheetContent side="right" className="overflow-auto p-4">
           <SheetHeader>
             <SheetTitle>
               {currentEditedId !== null ? "Edited Product" : "Add New Product"}
@@ -137,8 +136,8 @@ function AdminProducts() {
             setImageFile={setImageFile}
             uploadedImageUrl={uploadedImageUrl}
             setUploadedImageUrl={setUploadedImageUrl}
-            setImageLoadingState={setImageLoadingState}
             imageLoadingState={imageLoadingState}
+            setImageLoadingState={setImageLoadingState}
             isEditMode={currentEditedId !== null}
           />
           <div className="py-6">

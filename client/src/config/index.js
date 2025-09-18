@@ -46,7 +46,6 @@ export const addProductFormElement = [
     componentType: "input",
     type: "text",
     placeholder: "Enter product title",
-    // required: true,
   },
   {
     label: "Description",
@@ -59,11 +58,11 @@ export const addProductFormElement = [
     name: "category",
     componentType: "select",
     options: [
-      { value: "men", label: "Men" },
-      { value: "women", label: "Women" },
-      { value: "kids", label: "Kids" },
-      { value: "accessories", label: "Accessories" },
-      { value: "footwear", label: "Footwear" },
+      { id: "men", label: "Men" },
+      { id: "women", label: "Women" },
+      { id: "kids", label: "Kids" },
+      { id: "accessories", label: "Accessories" },
+      { id: "footwear", label: "Footwear" },
     ],
   },
   {
@@ -95,7 +94,7 @@ export const addProductFormElement = [
   },
   {
     label: "Total Stock",
-    name: "stock",
+    name: "totalStock",
     componentType: "input",
     type: "number",
     placeholder: "Enter total stock quantity",

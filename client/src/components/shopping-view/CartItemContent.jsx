@@ -12,7 +12,7 @@ function UserCartItemsContent({ cartItem }) {
     dispatch(
       updateCartQuantity({
         userId: user?.id,
-        productId: getCartItem?.pro,
+        productId: getCartItem?.productId,
         quantity:
           typeOfAction === "plus"
             ? getCartItem?.quantity + 1
@@ -40,7 +40,7 @@ function UserCartItemsContent({ cartItem }) {
   };
 
   return (
-    <div className="flex item-center space-x-4 ">
+    <div className="flex items-center space-x-4 ">
       <img
         src={cartItem.image}
         alt={cartItem.title}
@@ -53,6 +53,7 @@ function UserCartItemsContent({ cartItem }) {
             variant="outline"
             size="icon"
             className="h-8 w-8 rounded-full"
+            disabled={cartItem?.quantity === 1}
             onClick={() => handleUpdateQuantity(cartItem, "minus")}
           >
             <Minus className="w-4 h-4" />
@@ -63,7 +64,6 @@ function UserCartItemsContent({ cartItem }) {
             variant="outline"
             size="icon"
             className="h-8 w-8 rounded-full"
-            disable={cartItem?.quantity === 1}
             onClick={() => handleUpdateQuantity(cartItem, "plus")}
           >
             <Plus className="w-4 h-4" />
@@ -74,9 +74,10 @@ function UserCartItemsContent({ cartItem }) {
       <div className="flex flex-col items-end">
         <p className="font-semibold">
           $
-          {(cartItem?.salePrice > 0 ? cartItem?.salePrice : cartItem?.price) *
-            cartItem?.quantity}
-          .toFixed(2)
+          {(
+            (cartItem?.salePrice > 0 ? cartItem?.salePrice : cartItem?.price) *
+            cartItem?.quantity
+          ).toFixed(2)}
         </p>
         <Trash
           onClick={() => handleCartItemRemove(cartItem)}

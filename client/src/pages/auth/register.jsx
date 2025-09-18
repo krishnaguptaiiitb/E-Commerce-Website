@@ -7,9 +7,9 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 const initialState = {
-  username: "",
-  email: "",
-  password: "",
+  username: "mahiraziz",
+  email: "mahiraziz@gmail.com",
+  password: "mahir",
 };
 
 function AuthRegister() {

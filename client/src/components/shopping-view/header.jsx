@@ -36,6 +36,7 @@ function MenuItems() {
 
 function HeaderRightContent() {
   const { user } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.shopCart);
   const [openCartSheet, setOpenCartSheet] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,13 +47,14 @@ function HeaderRightContent() {
 
   useEffect(() => {
     dispatch(fetchCartItems(user?.id));
-  }, [dispatch]);
-
-  console.log(cartItems, "cartItems");
+  }, [dispatch, user?.id]);
 
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-2">
-      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+      <Sheet
+        open={openCartSheet}
+        onOpenChange={() => setOpenCartSheet(false)}
+      >
         <Button
           onClick={() => setOpenCartSheet(true)}
           variant="outline"
@@ -74,7 +76,7 @@ function HeaderRightContent() {
         <DropdownMenuTrigger asChild>
           <Avatar className="bg-black">
             <AvatarFallback className="bg-black text-white font-extrabold">
-              {user?.username[0].toUpperCase()}
+              {user?.username[0].toUpperCase() || "U"}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
