@@ -8,7 +8,7 @@ const initialState = {
 
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
-  async (userId, productId, quantity) => {
+  async ({ userId, productId, quantity }) => {
     const response = await axios.post(
       "http://localhost:5000/api/shop/cart/add",
       {
@@ -27,6 +27,7 @@ export const fetchCartItems = createAsyncThunk(
     const response = await axios.get(
       `http://localhost:5000/api/shop/cart/add/${userId}`
     );
+    console.log(response.data);
     return response.data;
   }
 );

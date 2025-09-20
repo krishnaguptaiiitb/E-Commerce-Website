@@ -22,9 +22,9 @@ const addToCart = async (req, res) => {
     }
 
     let cart = await Cart.findOne({ userId });
-
+    console.log(cart);
     if (!cart) {
-      cart = new cart({ userId, items: [] });
+      cart = new Cart({ userId, items: [] });
     }
 
     const findCurrentProductIndex = cart.items.findIndex(
@@ -46,7 +46,7 @@ const addToCart = async (req, res) => {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: "Error",
+      message: "Error while adding in cart",
     });
   }
 };
@@ -78,17 +78,17 @@ const fetchCartItems = async (req, res) => {
     );
 
     if (validCartItems.length < cart.items.length) {
-      cart.items = validItems;
+      cart.items = validCartItems;
       await cart.save();
     }
 
-    const populateCartItems = validItems.map((item) => ({
+    const populateCartItems = validCartItems.map((item) => ({
       productId: item.productId._id,
       image: item.productId.image,
       title: item.productId.title,
       price: item.productId.price,
-      salePrice: item.productId.price,
-      quantity: item.productId.quantity,
+      salePrice: item.productId.salePrice,
+      quantity: item.quantity,
     }));
 
     req.status(200).json({
