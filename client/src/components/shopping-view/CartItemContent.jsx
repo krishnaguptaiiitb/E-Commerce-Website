@@ -1,6 +1,9 @@
 import { Minus, Plus, Trash } from "lucide-react";
 import { Button } from "../ui/button";
-import { deleteCartItems, updateCartQuantity } from "@/store/shop/cart-slice";
+import {
+  deleteCartItem,
+  updateCartQuantity,
+} from "@/store/shop/cart-slice/index.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@/hooks/useToast";
 
@@ -29,7 +32,7 @@ function UserCartItemsContent({ cartItem }) {
 
   const handleCartItemRemove = (getCartItem) => {
     dispatch(
-      deleteCartItems({ userId: user?.id, productId: getCartItem?.productId })
+      deleteCartItem({ userId: user?.id, productId: getCartItem?.productId })
     ).then((data) => {
       if (data?.payload?.success) {
         toast({

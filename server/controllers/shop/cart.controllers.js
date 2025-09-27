@@ -91,7 +91,7 @@ const fetchCartItems = async (req, res) => {
       quantity: item.quantity,
     }));
 
-    req.status(200).json({
+    res.status(200).json({
       success: true,
       data: {
         ...cart._doc,
@@ -141,7 +141,7 @@ const updateCartItems = async (req, res) => {
     await cart.save();
 
     await cart.populate({
-      path: items.productId,
+      path: "items.productId",
       select: "image title price salePrice",
     });
 
@@ -151,7 +151,7 @@ const updateCartItems = async (req, res) => {
       title: item.productId ? item.productId.title : "Product not found",
       price: item.productId ? item.productId.price : null,
       salePrice: item.productId ? item.productId.salePrice : null,
-      quantity: item.productId.quantity,
+      quantity: item.quantity,
     }));
 
     res.status(200).json({

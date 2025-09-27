@@ -5,8 +5,8 @@ import { Button } from "../ui/button";
 import { brandOptionMap, categoryOptionMap } from "@/config";
 
 function ShoppingProductTile({
-  product,
   handleGetProductDetails,
+  product,
   handleAddToCart,
 }) {
   return (
@@ -40,13 +40,13 @@ function ShoppingProductTile({
                 product?.salePrice > 0 ? "line-through" : ""
               } text-lg font-semibold text-primary`}
             >
-              {categoryOptionMap[product?.category]}
+              ₹{product?.price}
             </span>
-            {product?.salePrice > 0 ? (
+            {product?.salePrice > 0 && (
               <span className="text-lg font-semibold text-primary">
-                {brandOptionMap[product?.brand]}
+                ₹{product?.salePrice}
               </span>
-            ) : null}
+            )}
           </div>
         </CardContent>
         <CardFooter>

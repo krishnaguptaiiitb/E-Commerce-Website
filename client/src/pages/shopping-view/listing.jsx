@@ -99,7 +99,7 @@ function ShoppingListing() {
         }
       }
     }
-
+    console.log("Adding to cart...", user?.id, getCurrentProductId);
     dispatch(
       addToCart({
         userId: user?.id,
@@ -139,7 +139,7 @@ function ShoppingListing() {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
 
-  console.log(productList, "productListproductListproductList");
+  console.log(productList, "productList hai bhai");
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">

@@ -20,7 +20,7 @@ import { fetchCartItems } from "@/store/shop/cart-slice/index.js";
 import { Label } from "../ui/label";
 
 function MenuItems() {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   function handleNavigate(getCurrentMenuItem) {
     sessionStorage.removeItem("filters");
     const currentFilter =
@@ -29,7 +29,6 @@ function MenuItems() {
             category: [getCurrentMenuItem.id],
           }
         : null;
-
     sessionStorage.setItem("filters", JSON.stringify(currentFilter));
     navigate(getCurrentMenuItem.path);
   }
@@ -66,7 +65,10 @@ function HeaderRightContent() {
 
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-2">
-      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+      <Sheet
+        open={openCartSheet}
+        onOpenChange={() => setOpenCartSheet(setOpenCartSheet)}
+      >
         <Button
           onClick={() => setOpenCartSheet(true)}
           variant="outline"
