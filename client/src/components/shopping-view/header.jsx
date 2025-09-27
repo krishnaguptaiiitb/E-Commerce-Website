@@ -16,19 +16,34 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { logoutUser } from "@/store/auth-slice";
 import UserCartWrapper from "./CartWrapper";
 import { useEffect, useState } from "react";
-import { fetchCartItems } from "@/store/shop/cart-slice";
+import { fetchCartItems } from "@/store/shop/cart-slice/index.js";
+import { Label } from "../ui/label";
 
 function MenuItems() {
+  const navigate = useNavigate;
+  function handleNavigate(getCurrentMenuItem) {
+    sessionStorage.removeItem("filters");
+    const currentFilter =
+      getCurrentMenuItem.id !== "home"
+        ? {
+            category: [getCurrentMenuItem.id],
+          }
+        : null;
+
+    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+    navigate(getCurrentMenuItem.path);
+  }
+
   return (
     <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
-      {shoppingViewHeaderMenuItems.map((MenuItems) => (
-        <Link
-          className="text-sm font-medium"
-          key={MenuItems.id}
-          to={MenuItems.path}
+      {shoppingViewHeaderMenuItems.map((MenuItem) => (
+        <Label
+          onClick={() => handleNavigate(MenuItem)}
+          className="text-sm font-medium cursor-pointer"
+          key={MenuItem.id}
         >
-          {MenuItems.label}
-        </Link>
+          {MenuItem.label}
+        </Label>
       ))}
     </nav>
   );
@@ -51,10 +66,7 @@ function HeaderRightContent() {
 
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-2">
-      <Sheet
-        open={openCartSheet}
-        onOpenChange={() => setOpenCartSheet(false)}
-      >
+      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
         <Button
           onClick={() => setOpenCartSheet(true)}
           variant="outline"
