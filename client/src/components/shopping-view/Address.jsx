@@ -15,12 +15,12 @@ import { useToast } from "@/hooks/useToast.js";
 const initialAddressFormData = {
   address: "",
   city: "",
-  phone: "",
   pincode: "",
+  phone: "",
   notes: "",
 };
 
-function Address() {
+function Address({ setCurrentSelectedAddress }) {
   const [formData, setFormData] = useState(initialAddressFormData);
   const [currentEditedId, setCurrentEditedId] = useState(null);
   const dispatch = useDispatch();
@@ -31,15 +31,15 @@ function Address() {
   function handleManageAddress(event) {
     event.preventDefault();
 
-    // if (addressList.length >= 3 && currentEditedId === null) {
-    //   setFormData(initialAddressFormData);
-    //   toast({
-    //     title: "Limit Reached",
-    //     description: "You can only have up to 3 addresses.",
-    //     variant: "destructive",
-    //   });
-    //   return;
-    // }
+    if (addressList.length >= 3 && currentEditedId === null) {
+      setFormData(initialAddressFormData);
+      toast({
+        title: "Limit Reached",
+        description: "You can only have up to 3 addresses.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     currentEditedId !== null
       ? dispatch(
@@ -117,21 +117,27 @@ function Address() {
   }
 
   useEffect(() => {
-    dispatch(fetchAllAddress({ userId: user?.id }));
-  }, [dispatch]);
+    if (user?.id) {
+      dispatch(fetchAllAddress({ userId: user.id }));
+    }
+  }, [dispatch, user?.id]);
 
   return (
     <Card>
-      <div className="mb-5 p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {addressList &&
-          addressList.length > 0 &&
+      <div className="mb-5 p-3 grid grid-cols-1 sm:grid-cols-2  gap-4">
+        {addressList && addressList.length > 0 ? (
           addressList.map((singleAddressItem) => (
             <AddressCard
+              key={singleAddressItem._id}
               addressInfo={singleAddressItem}
               handleDeleteAddress={handleDeleteAddress}
               handleEditAddress={handleEditAddress}
+              setCurrentSelectedAddress={setCurrentSelectedAddress}
             />
-          ))}
+          ))
+        ) : (
+          <h1 className="font-bold text-center col-span-3">No Address Found</h1>
+        )}
       </div>
       <CardHeader>
         <CardTitle>

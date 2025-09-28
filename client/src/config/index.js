@@ -192,7 +192,7 @@ export const addressFormControls = [
     placeholder: "Enter your city",
   },
   {
-    Lable: "Pincode",
+    label: "Pincode",
     name: "pincode",
     componentType: "input",
     type: "text",

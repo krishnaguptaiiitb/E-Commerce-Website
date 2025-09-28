@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "../ui/card";
 import {
   Table,
   TableBody,
@@ -8,17 +8,16 @@ import {
   TableRow,
 } from "../ui/table";
 import { Button } from "../ui/button";
-import { Dialog } from "@radix-ui/react-dialog";
-import ShoppingOrderDetailsView from "./OrderDetails";
+import { Dialog } from "../ui/dialog";
 import { useState } from "react";
+import AdminOrderDetailsView from "./OrderDetails";
 
-function ShoppingOrders() {
+function AdminOrdersView() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-
   return (
     <Card>
       <CardHeader className="text-center text-lg font-bold">
-        <CardTitle>Order History</CardTitle>
+        <CardTitle>All Orders</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
@@ -47,7 +46,7 @@ function ShoppingOrders() {
                   <Button onClick={() => setOpenDetailsDialog(true)}>
                     View Details
                   </Button>
-                  <ShoppingOrderDetailsView />
+                  <AdminOrderDetailsView />
                 </Dialog>
               </TableCell>
             </TableRow>
@@ -58,4 +57,4 @@ function ShoppingOrders() {
   );
 }
 
-export default ShoppingOrders;
+export default AdminOrdersView;
