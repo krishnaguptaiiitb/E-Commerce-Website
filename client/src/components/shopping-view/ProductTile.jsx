@@ -2,7 +2,6 @@ import React from "react";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { brandOptionMap, categoryOptionMap } from "@/config";
 
 function ShoppingProductTile({
   handleGetProductDetails,
@@ -40,11 +39,11 @@ function ShoppingProductTile({
                 product?.salePrice > 0 ? "line-through" : ""
               } text-lg font-semibold text-primary`}
             >
-              ₹{product?.price}
+              ${product?.price}
             </span>
             {product?.salePrice > 0 && (
               <span className="text-lg font-semibold text-primary">
-                ₹{product?.salePrice}
+                ${product?.salePrice}
               </span>
             )}
           </div>

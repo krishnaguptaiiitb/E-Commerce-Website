@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  isLoading: false,
   addressList: [],
+  isLoading: false,
 };
 
 export const addNewAddress = createAsyncThunk(
@@ -13,18 +13,16 @@ export const addNewAddress = createAsyncThunk(
       "http://localhost:5000/api/shop/address/add",
       formData
     );
-
     return response.data;
   }
 );
 
 export const fetchAllAddress = createAsyncThunk(
   "/addresses/fetchAllAddress",
-  async (userId) => {
+  async ({ userId }) => {
     const response = await axios.get(
       `http://localhost:5000/api/shop/address/get/${userId}`
     );
-
     return response.data;
   }
 );
@@ -36,7 +34,6 @@ export const editAddress = createAsyncThunk(
       `http://localhost:5000/api/shop/address/update/${userId}/${addressId}`,
       formData
     );
-
     return response.data;
   }
 );
@@ -47,7 +44,6 @@ export const deleteAddress = createAsyncThunk(
     const response = await axios.delete(
       `http://localhost:5000/api/shop/address/delete/${userId}/${addressId}`
     );
-
     return response.data;
   }
 );

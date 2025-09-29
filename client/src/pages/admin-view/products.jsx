@@ -8,7 +8,7 @@ import {
   deleteProduct,
   editProduct,
   fetchAllProducts,
-} from "@/store/admin/product-slice/index.js";
+} from "@/store/admin/products-slice/index.js";
 import {
   Sheet,
   SheetContent,

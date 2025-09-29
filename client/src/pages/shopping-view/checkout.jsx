@@ -67,12 +67,13 @@ function ShoppingCheckout() {
     dispatch(createNewOrder(orderData)).then((data) => {
       console.log(data, "Mahir");
       if (data?.payload?.success) {
-        isPaymentStart(true);
+        setIsPaymentStart(true);
       } else {
-        setIsPaymentStart(false);
+        setIsPaymentStart(true);
       }
     });
   }
+
   useEffect(() => {
     if (approvalURL) {
       window.location.href = approvalURL;

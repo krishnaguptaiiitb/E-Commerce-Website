@@ -81,6 +81,7 @@ const createOrder = async (req, res) => {
 
         res.status(201).json({
           success: true,
+          message: "Order created successfully",
           approvalURL,
           orderId: newlyCreatedOrder._id,
         });
@@ -199,9 +200,4 @@ const getOrderDetails = async (req, res) => {
   }
 };
 
-export {
-  createOrder,
-  capturePayment,
-  getAllOrdersByUser,
-  getOrderDetails,
-};
+export { createOrder, capturePayment, getAllOrdersByUser, getOrderDetails };

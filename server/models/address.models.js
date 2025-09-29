@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const addressSchema = new mongoose.Schema(
+const AddressSchema = new mongoose.Schema(
   {
     userId: String,
     address: String,
@@ -12,4 +12,4 @@ const addressSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Address = mongoose.model("Address", addressSchema);
+export const Address = mongoose.model("Address", AddressSchema);

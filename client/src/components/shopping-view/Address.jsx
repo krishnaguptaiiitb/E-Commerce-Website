@@ -108,7 +108,7 @@ function Address({ setCurrentSelectedAddress }) {
     });
   }
 
-  console.log("Address List:", addressList);
+  console.log("Address List: ", addressList);
 
   function isFormValid() {
     return Object.keys(formData)
@@ -117,10 +117,8 @@ function Address({ setCurrentSelectedAddress }) {
   }
 
   useEffect(() => {
-    if (user?.id) {
-      dispatch(fetchAllAddress({ userId: user.id }));
-    }
-  }, [dispatch, user?.id]);
+    dispatch(fetchAllAddress({ userId: user?.id }));
+  }, [dispatch]);
 
   return (
     <Card>

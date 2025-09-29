@@ -17,7 +17,6 @@ export const addToCart = createAsyncThunk(
         quantity,
       }
     );
-
     return response.data;
   }
 );
@@ -28,7 +27,6 @@ export const fetchCartItems = createAsyncThunk(
     const response = await axios.get(
       `http://localhost:5000/api/shop/cart/get/${userId}`
     );
-
     return response.data;
   }
 );
@@ -39,7 +37,6 @@ export const deleteCartItem = createAsyncThunk(
     const response = await axios.delete(
       `http://localhost:5000/api/shop/cart/${userId}/${productId}`
     );
-
     return response.data;
   }
 );
@@ -55,7 +52,6 @@ export const updateCartQuantity = createAsyncThunk(
         quantity,
       }
     );
-
     return response.data;
   }
 );

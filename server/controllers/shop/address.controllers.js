@@ -17,6 +17,7 @@ const addAddress = async (req, res) => {
       phone,
       notes,
     });
+
     await newAddress.save();
 
     res.status(201).json({
@@ -45,11 +46,11 @@ const fetchAllAddress = async (req, res) => {
         .status(404)
         .json({ success: false, message: "No addresses found" });
     }
-
+    // console.log(addresses, "this is address list")
     res.status(200).json({
       success: true,
       message: "Address fetched successfully",
-      addresses,
+      data: addresses,
     });
   } catch (error) {
     console.log(error);

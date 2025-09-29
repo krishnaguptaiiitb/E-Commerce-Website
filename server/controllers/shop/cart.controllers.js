@@ -22,7 +22,7 @@ const addToCart = async (req, res) => {
     }
 
     let cart = await Cart.findOne({ userId });
-    console.log(cart);
+    console.log(cart, "hello");
     if (!cart) {
       cart = new Cart({ userId, items: [] });
     }
