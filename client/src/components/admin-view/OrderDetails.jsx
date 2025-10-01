@@ -1,16 +1,17 @@
 import { useState } from "react";
-import CommonForm from "../common/form";
+import CommonForm from "../common/Form";
 import { DialogContent } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 import { useDispatch, useSelector } from "react-redux";
+
+import { useToast } from "@/hooks/useToast.js";
 import {
   getAllOrdersForAdmin,
   getOrderDetailsForAdmin,
   updateOrderStatus,
 } from "@/store/admin/order-slice/index.js";
-import { useToast } from "@/hooks/useToast";
 
 const initialFormData = {
   status: "",
@@ -22,10 +23,11 @@ function AdminOrderDetailsView({ orderDetails }) {
   const dispatch = useDispatch();
   const { toast } = useToast();
 
-  console.log(orderDetails, "orderDetailsorderDetails");
+  console.log(orderDetails, "Orderdetails in orderdetailview");
 
   function handleUpdateStatus(event) {
     event.preventDefault();
+    console.log(formData);
     const { status } = formData;
 
     dispatch(
@@ -52,7 +54,7 @@ function AdminOrderDetailsView({ orderDetails }) {
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Date</p>
-            <Label>{orderDetails?.orderDate.split("T")[0]}</Label>
+            <Label>{orderDetails?.createdAt.split("T")[0]}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Price</p>

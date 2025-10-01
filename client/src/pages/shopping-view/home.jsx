@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@/hooks/useToast.js";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice/index.js";
 import {
   fetchAllFilteredProducts,

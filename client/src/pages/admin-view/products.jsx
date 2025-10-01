@@ -1,7 +1,7 @@
 import ProductImageUpload from "@/components/admin-view/ImageUpload";
 import AdminProductTile from "@/components/admin-view/ProductTile";
 import CommonForm from "@/components/common/Form";
-import { addProductFormElement } from "@/config";
+import { addProductFormElements } from "@/config";
 import { Button } from "@/components/ui/button";
 import {
   addNewProduct,
@@ -142,7 +142,7 @@ function AdminProducts() {
           />
           <div className="py-6">
             <CommonForm
-              formControls={addProductFormElement}
+              formControls={addProductFormElements}
               formData={formData}
               setFormData={setFormData}
               buttonText={currentEditedId !== null ? "Edit" : "Add"}

@@ -1,21 +1,21 @@
 export const registerFormControls = [
   {
+    name: "userName",
+    label: "User Name",
+    placeholder: "Enter your user name",
+    componentType: "input",
+    type: "text",
+  },
+  {
     name: "email",
-    label: "Email:",
+    label: "Email",
     placeholder: "Enter your email",
     componentType: "input",
     type: "email",
   },
   {
-    name: "username",
-    label: "Username:",
-    placeholder: "Enter your username",
-    componentType: "input",
-    type: "text",
-  },
-  {
     name: "password",
-    label: "Password:",
+    label: "Password",
     placeholder: "Enter your password",
     componentType: "input",
     type: "password",
@@ -25,21 +25,21 @@ export const registerFormControls = [
 export const loginFormControls = [
   {
     name: "email",
-    label: "Email:",
+    label: "Email",
     placeholder: "Enter your email",
     componentType: "input",
     type: "email",
   },
   {
     name: "password",
-    label: "Password:",
+    label: "Password",
     placeholder: "Enter your password",
     componentType: "input",
     type: "password",
   },
 ];
 
-export const addProductFormElement = [
+export const addProductFormElements = [
   {
     label: "Title",
     name: "title",
@@ -73,9 +73,9 @@ export const addProductFormElement = [
       { id: "nike", label: "Nike" },
       { id: "adidas", label: "Adidas" },
       { id: "puma", label: "Puma" },
-      { id: "levi", label: "Levis" },
+      { id: "levi", label: "Levi's" },
       { id: "zara", label: "Zara" },
-      { id: "h$m", label: "H$M" },
+      { id: "h&m", label: "H&M" },
     ],
   },
   {
@@ -97,7 +97,7 @@ export const addProductFormElement = [
     name: "totalStock",
     componentType: "input",
     type: "number",
-    placeholder: "Enter total stock quantity",
+    placeholder: "Enter total stock",
   },
 ];
 
@@ -106,6 +106,11 @@ export const shoppingViewHeaderMenuItems = [
     id: "home",
     label: "Home",
     path: "/shop/home",
+  },
+  {
+    id: "products",
+    label: "Products",
+    path: "/shop/listing",
   },
   {
     id: "men",
@@ -123,30 +128,35 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/listing",
   },
   {
+    id: "footwear",
+    label: "Footwear",
+    path: "/shop/listing",
+  },
+  {
     id: "accessories",
     label: "Accessories",
     path: "/shop/listing",
   },
   {
-    id: "footwear",
-    label: "Footwear",
-    path: "/shop/listing",
+    id: "search",
+    label: "Search",
+    path: "/shop/search",
   },
 ];
 
-export const categoryOptionMap = {
+export const categoryOptionsMap = {
   men: "Men",
   women: "Women",
   kids: "Kids",
-  accessorries: "Accessories",
+  accessories: "Accessories",
   footwear: "Footwear",
 };
 
-export const brandOptionMap = {
+export const brandOptionsMap = {
   nike: "Nike",
   adidas: "Adidas",
   puma: "Puma",
-  levis: "Levis",
+  levi: "Levi",
   zara: "Zara",
   "h&m": "H&M",
 };
@@ -163,17 +173,17 @@ export const filterOptions = {
     { id: "nike", label: "Nike" },
     { id: "adidas", label: "Adidas" },
     { id: "puma", label: "Puma" },
-    { id: "levis", label: "Levis" },
+    { id: "levi", label: "Levi's" },
     { id: "zara", label: "Zara" },
     { id: "h&m", label: "H&M" },
   ],
 };
 
 export const sortOptions = [
-  { id: "price-lowtohigh", label: "Low to High" },
-  { id: "price-hightolow", label: "High to Low" },
-  { id: "title-atoz", label: "Title A to Z" },
-  { id: "title-ztoa", label: "Title Z to A" },
+  { id: "price-lowtohigh", label: "Price: Low to High" },
+  { id: "price-hightolow", label: "Price: High to Low" },
+  { id: "title-atoz", label: "Title: A to Z" },
+  { id: "title-ztoa", label: "Title: Z to A" },
 ];
 
 export const addressFormControls = [
@@ -209,6 +219,6 @@ export const addressFormControls = [
     label: "Notes",
     name: "notes",
     componentType: "textarea",
-    placeholder: "Additional notes (optional)",
+    placeholder: "Enter any additional notes",
   },
 ];

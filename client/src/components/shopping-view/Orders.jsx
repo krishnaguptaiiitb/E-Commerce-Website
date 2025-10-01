@@ -10,13 +10,13 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import ShoppingOrderDetailsView from "./order-details";
+import ShoppingOrderDetailsView from "./OrderDetails";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrdersByUserId,
   getOrderDetails,
   resetOrderDetails,
-} from "@/store/shop/order-slice";
+} from "@/store/shop/order-slice/index.js";
 import { Badge } from "../ui/badge";
 
 function ShoppingOrders() {
@@ -38,6 +38,7 @@ function ShoppingOrders() {
   }, [orderDetails]);
 
   console.log(orderDetails, "orderDetails");
+  console.log(orderList, "orderList");
 
   return (
     <Card>
@@ -62,7 +63,7 @@ function ShoppingOrders() {
               ? orderList.map((orderItem) => (
                   <TableRow>
                     <TableCell>{orderItem?._id}</TableCell>
-                    <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
+                    <TableCell>{orderItem?.createdAt.split("T")[0]}</TableCell>
                     <TableCell>
                       <Badge
                         className={`py-1 px-3 ${

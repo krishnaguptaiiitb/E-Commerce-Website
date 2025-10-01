@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { createNewOrder } from "@/store/shop/order-slice";
 import Address from "@/components/shopping-view/Address";
 import UserCartItemsContent from "@/components/shopping-view/CartItemContent";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@/hooks/useToast.js";
 
 function ShoppingCheckout() {
   const { cartItems } = useSelector((state) => state.shopCart);
@@ -14,7 +14,8 @@ function ShoppingCheckout() {
   const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
   const [isPaymentStart, setIsPaymentStart] = useState(false);
   const dispatch = useDispatch();
-  const toast = useToast();
+  const { toast } = useToast();
+
   console.log(currentSelectedAddress, "Selected Address");
   console.log("Cart Items:", cartItems);
 
@@ -39,6 +40,7 @@ function ShoppingCheckout() {
       });
       return;
     }
+
     if (currentSelectedAddress == null) {
       toast({
         title: "Please one address to proceed",

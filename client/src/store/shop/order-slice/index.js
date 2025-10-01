@@ -106,5 +106,5 @@ const shoppingOrderSlice = createSlice({
       });
   },
 });
-export const { resetOrderDetails } = shoppingOrderSlice.reducer;
+export const { resetOrderDetails } = shoppingOrderSlice.actions;
 export default shoppingOrderSlice.reducer;

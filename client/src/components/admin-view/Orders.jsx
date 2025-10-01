@@ -10,14 +10,14 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import AdminOrderDetailsView from "./order-details";
+import AdminOrderDetailsView from "./OrderDetails";
 import { useDispatch, useSelector } from "react-redux";
+import { Badge } from "../ui/badge";
 import {
   getAllOrdersForAdmin,
   getOrderDetailsForAdmin,
   resetOrderDetails,
-} from "@/store/admin/order-slice.index.js";
-import { Badge } from "../ui/badge";
+} from "@/store/admin/order-slice/index.js";
 
 function AdminOrdersView() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
@@ -32,7 +32,8 @@ function AdminOrdersView() {
     dispatch(getAllOrdersForAdmin());
   }, [dispatch]);
 
-  console.log(orderDetails, "orderList");
+  console.log(orderDetails, "orderDetails");
+  console.log(orderList, "orderList");
 
   useEffect(() => {
     if (orderDetails !== null) setOpenDetailsDialog(true);
@@ -61,7 +62,7 @@ function AdminOrdersView() {
               ? orderList.map((orderItem) => (
                   <TableRow>
                     <TableCell>{orderItem?._id}</TableCell>
-                    <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
+                    <TableCell>{orderItem?.createdAt.split("T")[0]}</TableCell>
                     <TableCell>
                       <Badge
                         className={`py-1 px-3 ${
