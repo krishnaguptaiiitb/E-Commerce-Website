@@ -1,4 +1,4 @@
-import ProductImageUpload from "@/components/admin-view/ImageUpload";
+import ProductImageUpload from "@/components/admin-view/AdminImageUpload";
 import { Button } from "@/components/ui/button";
 import {
   addFeatureImage,

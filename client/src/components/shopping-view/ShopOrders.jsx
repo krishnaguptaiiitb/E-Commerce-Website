@@ -10,39 +10,40 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import AdminOrderDetailsView from "./OrderDetails";
+import ShoppingOrderDetailsView from "./ShopOrderDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { Badge } from "../ui/badge";
 import {
-  getAllOrdersForAdmin,
-  getOrderDetailsForAdmin,
+  getAllOrdersByUserId,
+  getOrderDetails,
   resetOrderDetails,
-} from "@/store/admin/order-slice/index.js";
+} from "@/store/shop/order-slice/index.js";
+import { Badge } from "../ui/badge";
 
-function AdminOrdersView() {
+function ShoppingOrders() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const { orderList, orderDetails } = useSelector((state) => state.adminOrder);
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const { orderList, orderDetails } = useSelector((state) => state.shopOrder);
 
   function handleFetchOrderDetails(getId) {
-    dispatch(getOrderDetailsForAdmin(getId));
+    dispatch(getOrderDetails(getId));
   }
 
   useEffect(() => {
-    dispatch(getAllOrdersForAdmin());
+    dispatch(getAllOrdersByUserId(user?.id));
   }, [dispatch]);
-
-  console.log(orderDetails, "orderDetails");
-  console.log(orderList, "orderList");
 
   useEffect(() => {
     if (orderDetails !== null) setOpenDetailsDialog(true);
   }, [orderDetails]);
 
+  console.log(orderDetails, "orderDetails");
+  console.log(orderList, "orderList");
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>All Orders</CardTitle>
+        <CardTitle>Order History</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
@@ -92,7 +93,7 @@ function AdminOrdersView() {
                         >
                           View Details
                         </Button>
-                        <AdminOrderDetailsView orderDetails={orderDetails} />
+                        <ShoppingOrderDetailsView orderDetails={orderDetails} />
                       </Dialog>
                     </TableCell>
                   </TableRow>
@@ -105,4 +106,4 @@ function AdminOrdersView() {
   );
 }
 
-export default AdminOrdersView;
+export default ShoppingOrders;

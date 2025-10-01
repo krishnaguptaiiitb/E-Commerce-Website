@@ -1,5 +1,5 @@
-import ProductImageUpload from "@/components/admin-view/ImageUpload";
-import AdminProductTile from "@/components/admin-view/ProductTile";
+import ProductImageUpload from "@/components/admin-view/AdminImageUpload";
+import AdminProductTile from "@/components/admin-view/AdminProductTile";
 import CommonForm from "@/components/common/Form";
 import { addProductFormElements } from "@/config";
 import { Button } from "@/components/ui/button";

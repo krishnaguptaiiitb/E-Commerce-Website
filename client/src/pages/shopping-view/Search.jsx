@@ -1,5 +1,5 @@
-import ProductDetailsDialog from "@/components/shopping-view/ProductDetails";
-import ShoppingProductTile from "@/components/shopping-view/ProductTile";
+import ProductDetailsDialog from "@/components/shopping-view/ShopProductDetails";
+import ShoppingProductTile from "@/components/shopping-view/ShopProductTile";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/useToast.js";
 import { getSearchResults, resetSearchResults } from "@/store/search-slice/index.js";

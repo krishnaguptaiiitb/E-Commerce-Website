@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { Button } from "../ui/button";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
-import UserCartItemsContent from "./CartItemContent";
+import UserCartItemsContent from "./ShopCartItemContent";
 
 function UserCartWrapper({ cartItems, setOpenCartSheet }) {
   const navigate = useNavigate();

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { createNewOrder } from "@/store/shop/order-slice";
-import Address from "@/components/shopping-view/Address";
-import UserCartItemsContent from "@/components/shopping-view/CartItemContent";
+import Address from "@/components/shopping-view/ShopAddress";
+import UserCartItemsContent from "@/components/shopping-view/ShopCartItemContent";
 import { useToast } from "@/hooks/useToast.js";
 
 function ShoppingCheckout() {

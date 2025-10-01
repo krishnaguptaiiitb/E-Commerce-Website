@@ -19,7 +19,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { logoutUser } from "@/store/auth-slice";
-import UserCartWrapper from "./CartWrapper";
+import UserCartWrapper from "./ShopCartWrapper";
 import { useEffect, useState } from "react";
 import { fetchCartItems } from "@/store/shop/cart-slice/index.js";
 import { Label } from "../ui/label";
