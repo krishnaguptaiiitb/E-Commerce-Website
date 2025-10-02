@@ -2,7 +2,10 @@ import ProductDetailsDialog from "@/components/shopping-view/ShopProductDetails"
 import ShoppingProductTile from "@/components/shopping-view/ShopProductTile";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/useToast.js";
-import { getSearchResults, resetSearchResults } from "@/store/search-slice/index.js";
+import {
+  getSearchResults,
+  resetSearchResults,
+} from "@/store/search-slice/index.js";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice/index.js";
 import { fetchProductDetails } from "@/store/shop/products-slice/index.js";
 import { useEffect, useState } from "react";

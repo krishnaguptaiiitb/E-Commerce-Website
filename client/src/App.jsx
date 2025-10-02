@@ -13,6 +13,9 @@ import ShoppingHome from "./pages/shopping-view/Home";
 import ShoppingListing from "./pages/shopping-view/Listing";
 import ShoppingCheckout from "./pages/shopping-view/Checkout";
 import ShoppingAccount from "./pages/shopping-view/Account";
+import SearchProducts from "./pages/shopping-view/Search";
+import PaypalReturnPage from "./pages/shopping-view/PaypalReturn";
+import PaymentSuccessPage from "./pages/shopping-view/PaymentSuccess";
 import UnauthPage from "./pages/unauth-page/Index";
 import PageNotFound from "./pages/page-not-found/PageNotFound";
 
@@ -20,9 +23,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "./components/ui/skeleton";
-import PaypalReturnPage from "./pages/shopping-view/PaypalReturn";
-import PaymentSuccessPage from "./pages/shopping-view/PaymentSuccess";
-import SearchProducts from "./pages/shopping-view/Search";
 
 function App() {
   const { isAuthenticated, user, isLoading } = useSelector(
@@ -37,16 +37,10 @@ function App() {
   if (isLoading) {
     return <Skeleton className="h-[600px] w-[600px] rounded-full" />;
   }
-  // const user = null;
-  // const user = {
-  //   name: "mahir",
-  //   role: "user",
-  // };
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       {/* common component */}
-      <h1>Header component</h1>
       <Routes>
         <Route
           path="/auth"

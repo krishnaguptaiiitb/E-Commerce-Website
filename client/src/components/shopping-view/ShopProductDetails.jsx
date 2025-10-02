@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { Dialog, DialogContent } from "../ui/dialog";
+import { Separator } from "../ui/separator";
+import { Input } from "../ui/input";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice/index.js";
 import { setProductDetails } from "@/store/shop/products-slice/index.js";
-import { addReview, getReviews } from "@/store/shop/review-slice/index.js";
-import StarRatingComponent from "../common/StarRating";
-import { useToast } from "../../hooks/useToast.js";
-import { Dialog, DialogContent } from "../ui/dialog";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import StarRatingComponent from "../common/StarRating";
+import { useEffect, useState } from "react";
+import { addReview, getReviews } from "@/store/shop/review-slice/index.js";
+import { useToast } from "@/hooks/useToast.js";
 
 function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const [reviewMsg, setReviewMsg] = useState("");

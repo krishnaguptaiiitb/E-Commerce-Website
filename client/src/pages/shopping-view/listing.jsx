@@ -1,5 +1,5 @@
 import ProductFilter from "@/components/shopping-view/ShopFilter";
-import ProductDetailsDialog from "@/components/shopping-view/ShopProductDetails";
+import ProductDetailsDialog from "@/components/shopping-view/ShopOrderDetails";
 import ShoppingProductTile from "@/components/shopping-view/ShopProductTile";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { sortOptions } from "@/config";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@/hooks/useToast.js";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice/index.js";
 import {
   fetchAllFilteredProducts,
@@ -31,7 +31,9 @@ function createSearchParamsHelper(filterParams) {
       queryParams.push(`${key}=${encodeURIComponent(paramValue)}`);
     }
   }
+
   console.log(queryParams, "queryParams");
+
   return queryParams.join("&");
 }
 
@@ -40,6 +42,8 @@ function ShoppingListing() {
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
+  console.log(productDetails, "ProductDetails in listing")
+  console.log(productList, "PrductList in listing")
   const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
   const [filters, setFilters] = useState({});
@@ -47,6 +51,7 @@ function ShoppingListing() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
   const { toast } = useToast();
+
   const categorySearchParam = searchParams.get("category");
 
   function handleSort(value) {
@@ -80,13 +85,13 @@ function ShoppingListing() {
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
-  function handleAddToCart(getCurrentProductId, getTotalStock) {
+  function handleAddtoCart(getCurrentProductId, getTotalStock) {
     console.log(cartItems);
-    let getCartItems = cartItems || [];
+    let getCartItems = cartItems.items || [];
 
     if (getCartItems.length) {
       const indexOfCurrentItem = getCartItems.findIndex(
-        (item) => item.productId.toString() === getCurrentProductId
+        (item) => item.productId === getCurrentProductId
       );
       if (indexOfCurrentItem > -1) {
         const getQuantity = getCartItems[indexOfCurrentItem].quantity;
@@ -95,11 +100,12 @@ function ShoppingListing() {
             title: `Only ${getQuantity} quantity can be added for this item`,
             variant: "destructive",
           });
+
           return;
         }
       }
     }
-    console.log("Adding to cart...", user?.id, getCurrentProductId);
+
     dispatch(
       addToCart({
         userId: user?.id,
@@ -139,7 +145,7 @@ function ShoppingListing() {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
 
-  console.log(productList, "productList hai bhai");
+  console.log(productList, "productListproductListproductList");
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
@@ -181,10 +187,9 @@ function ShoppingListing() {
           {productList && productList.length > 0
             ? productList.map((productItem) => (
                 <ShoppingProductTile
-                  key={productItem._id}
                   handleGetProductDetails={handleGetProductDetails}
                   product={productItem}
-                  handleAddToCart={handleAddToCart}
+                  handleAddtoCart={handleAddtoCart}
                 />
               ))
             : null}

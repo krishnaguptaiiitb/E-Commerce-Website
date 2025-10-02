@@ -18,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { logoutUser } from "@/store/auth-slice";
+import { logoutUser } from "@/store/auth-slice/index.js";
 import UserCartWrapper from "./ShopCartWrapper";
 import { useEffect, useState } from "react";
 import { fetchCartItems } from "@/store/shop/cart-slice/index.js";
@@ -28,32 +28,36 @@ function MenuItems() {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
+
   function handleNavigate(getCurrentMenuItem) {
     sessionStorage.removeItem("filters");
     const currentFilter =
-      getCurrentMenuItem.id !== "home" && getCurrentMenuItem.id !== products
+      getCurrentMenuItem.id !== "home" &&
+      getCurrentMenuItem.id !== "products" &&
+      getCurrentMenuItem.id !== "search"
         ? {
             category: [getCurrentMenuItem.id],
           }
         : null;
+
     sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+
     location.pathname.includes("listing") && currentFilter !== null
       ? setSearchParams(
           new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
         )
-      : null;
-    navigate(getCurrentMenuItem.path);
+      : navigate(getCurrentMenuItem.path);
   }
 
   return (
     <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
-      {shoppingViewHeaderMenuItems.map((MenuItem) => (
+      {shoppingViewHeaderMenuItems.map((menuItem) => (
         <Label
-          onClick={() => handleNavigate(MenuItem)}
+          onClick={() => handleNavigate(menuItem)}
           className="text-sm font-medium cursor-pointer"
-          key={MenuItem.id}
+          key={menuItem.id}
         >
-          {MenuItem.label}
+          {menuItem.label}
         </Label>
       ))}
     </nav>
@@ -73,29 +77,31 @@ function HeaderRightContent() {
 
   useEffect(() => {
     dispatch(fetchCartItems(user?.id));
-  }, [dispatch, user?.id]);
+  }, [dispatch]);
 
+  // console.log(cartItems, "CartItems in shopheader");
   return (
-    <div className="flex lg:items-center lg:flex-row flex-col gap-2">
-      <Sheet
-        open={openCartSheet}
-        onOpenChange={() => setOpenCartSheet(setOpenCartSheet)}
-      >
+    <div className="flex lg:items-center lg:flex-row flex-col gap-4">
+      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
         <Button
           onClick={() => setOpenCartSheet(true)}
           variant="outline"
           size="icon"
+          className="relative"
         >
           <ShoppingCart className="w-6 h-6" />
+          <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
+            {cartItems?.items?.length || 0}
+          </span>
           <span className="sr-only">User cart</span>
         </Button>
         <UserCartWrapper
+          setOpenCartSheet={setOpenCartSheet}
           cartItems={
             cartItems && cartItems.items && cartItems.items.length > 0
               ? cartItems.items
               : []
           }
-          setOpenCartSheet={setOpenCartSheet}
         />
       </Sheet>
 
@@ -103,7 +109,7 @@ function HeaderRightContent() {
         <DropdownMenuTrigger asChild>
           <Avatar className="bg-black">
             <AvatarFallback className="bg-black text-white font-extrabold">
-              {user?.username[0].toUpperCase() || "U"}
+              {user?.username[0].toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
@@ -126,15 +132,12 @@ function HeaderRightContent() {
 }
 
 function ShoppingHeader() {
-  const { user } = useSelector((state) => state.auth);
-  console.log(user, "user");
-
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
-        <Link to="/shop/home" className="flex items-center gap-2 ">
+        <Link to="/shop/home" className="flex items-center gap-2">
           <HousePlug className="h-6 w-6" />
-          <span>ECommerce</span>
+          <span className="font-bold">Ecommerce</span>
         </Link>
         <Sheet>
           <SheetTrigger asChild>
@@ -151,6 +154,7 @@ function ShoppingHeader() {
         <div className="hidden lg:block">
           <MenuItems />
         </div>
+
         <div className="hidden lg:block">
           <HeaderRightContent />
         </div>
