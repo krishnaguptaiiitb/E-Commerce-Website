@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ProductReviewSchema = new mongoose.Schema(
+const ReviewSchema = new mongoose.Schema(
   {
     productId: String,
     userId: String,
@@ -11,7 +11,7 @@ const ProductReviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const ProductReview = mongoose.model(
+export const Review = mongoose.model(
   "ProductReview",
-  ProductReviewSchema
+  ReviewSchema
 );

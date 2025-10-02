@@ -12,6 +12,7 @@ import shopSearchSlice from "./search-slice/index.js";
 import shopReviewSlice from "./shop/review-slice/index.js";
 
 import commonFeatureSlice from "./common-slice/index.js";
+
 const store = configureStore({
   reducer: {
     auth: authReducer,

@@ -1,6 +1,6 @@
 import { Order } from "../../models/order.models.js";
 import { Product } from "../../models/product.models.js";
-import { ProductReview } from "../../models/review.models.js";
+import { Review } from "../../models/review.models.js";
 
 const addProductReview = async (req, res) => {
   try {
@@ -20,19 +20,19 @@ const addProductReview = async (req, res) => {
       });
     }
 
-    const checkExistinfReview = await ProductReview.findOne({
+    const checkExistingReview = await Review.findOne({
       productId,
       userId,
     });
 
-    if (checkExistinfReview) {
+    if (checkExistingReview) {
       return res.status(400).json({
         success: false,
         message: "You already reviewed this product!",
       });
     }
 
-    const newReview = new ProductReview({
+    const newReview = new Review({
       productId,
       userId,
       userName,
@@ -42,7 +42,7 @@ const addProductReview = async (req, res) => {
 
     await newReview.save();
 
-    const reviews = await ProductReview.find({ productId });
+    const reviews = await Review.find({ productId });
     const totalReviewsLength = reviews.length;
     const averageReview =
       reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) /
@@ -58,7 +58,7 @@ const addProductReview = async (req, res) => {
     console.log(e);
     res.status(500).json({
       success: false,
-      message: "Error",
+      message: "Error occur while adding reviews!",
     });
   }
 };
@@ -67,16 +67,16 @@ const getProductReviews = async (req, res) => {
   try {
     const { productId } = req.params;
 
-    const reviews = await ProductReview.find({ productId });
+    const reviews = await Review.find({ productId });
     res.status(200).json({
       success: true,
       data: reviews,
     });
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
-      message: "Error",
+      message: "Error occur while get product review!",
     });
   }
 };

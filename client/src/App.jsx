@@ -1,9 +1,11 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { Skeleton } from "./components/ui/skeleton";
+import { checkAuth } from "./store/auth-slice";
 import CheckAuth from "./components/common/CheckAuth";
-import AuthLayout from "./components/auth/Layout";
 import AuthLogin from "./pages/auth/Login";
 import AuthRegister from "./pages/auth/Register";
-import AdminLayout from "./components/admin-view/AdminLayout";
 import AdminDashboard from "./pages/admin-view/Dashboard";
 import AdminProducts from "./pages/admin-view/Products";
 import AdminOrders from "./pages/admin-view/Orders";
@@ -13,19 +15,16 @@ import ShoppingHome from "./pages/shopping-view/Home";
 import ShoppingListing from "./pages/shopping-view/Listing";
 import ShoppingCheckout from "./pages/shopping-view/Checkout";
 import ShoppingAccount from "./pages/shopping-view/Account";
-import SearchProducts from "./pages/shopping-view/Search";
 import PaypalReturnPage from "./pages/shopping-view/PaypalReturn";
 import PaymentSuccessPage from "./pages/shopping-view/PaymentSuccess";
+import SearchProducts from "./pages/shopping-view/Search";
 import UnauthPage from "./pages/unauth-page/Index";
-import PageNotFound from "./pages/page-not-found/PageNotFound";
-
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { checkAuth } from "./store/auth-slice";
-import { Skeleton } from "./components/ui/skeleton";
+import AuthLayout from "./components/auth/Layout";
+import AdminLayout from "./components/admin-view/AdminLayout";
+import pageNotFound from "./pages/page-not-found/PageNotFound";
 
 function App() {
-  const { isAuthenticated, user, isLoading } = useSelector(
+  const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
@@ -34,14 +33,22 @@ function App() {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (isLoading) {
-    return <Skeleton className="h-[600px] w-[600px] rounded-full" />;
-  }
+  if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
+
+  console.log(isLoading, user);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
-      {/* common component */}
       <Routes>
+        <Route
+          path="/"
+          element={
+            <CheckAuth
+              isAuthenticated={isAuthenticated}
+              user={user}
+            ></CheckAuth>
+          }
+        />
         <Route
           path="/auth"
           element={
@@ -83,7 +90,7 @@ function App() {
           <Route path="search" element={<SearchProducts />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="*" element={<pageNotFound />} />
       </Routes>
     </div>
   );

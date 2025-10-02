@@ -1,65 +1,65 @@
-import img from "../../assets/account.jpg";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@/components/ui/button";
-import { createNewOrder } from "@/store/shop/order-slice";
 import Address from "@/components/shopping-view/ShopAddress";
+import img from "../../assets/account.jpg";
+import { useDispatch, useSelector } from "react-redux";
 import UserCartItemsContent from "@/components/shopping-view/ShopCartItemContent";
-import { useToast } from "@/hooks/useToast.js";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { createNewOrder } from "@/store/shop/order-slice";
+import { useToast } from "@/hooks/useToast";
 
 function ShoppingCheckout() {
   const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
   const { approvalURL } = useSelector((state) => state.shopOrder);
   const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
-  const [isPaymentStart, setIsPaymentStart] = useState(false);
+  const [isPaymentStart, setIsPaymemntStart] = useState(false);
   const dispatch = useDispatch();
   const { toast } = useToast();
 
-  console.log(currentSelectedAddress, "Selected Address");
-  console.log("Cart Items:", cartItems);
+  console.log(currentSelectedAddress, "cartItems");
 
   const totalCartAmount =
     cartItems && cartItems.items && cartItems.items.length > 0
-      ? cartItems.items.reduce((sum, currentItem) => {
-          const price =
-            Number(currentItem?.salePrice) > 0
-              ? Number(currentItem?.salePrice)
-              : Number(currentItem?.price || 0);
-          const quantity = Number(currentItem?.quantity || 0);
-          return sum + price * quantity;
-        }, 0)
+      ? cartItems.items.reduce(
+          (sum, currentItem) =>
+            sum +
+            (currentItem?.salePrice > 0
+              ? currentItem?.salePrice
+              : currentItem?.price) *
+              currentItem?.quantity,
+          0
+        )
       : 0;
 
-  // Sample data for order details
   function handleInitiatePaypalPayment() {
     if (cartItems.length === 0) {
       toast({
         title: "Your cart is empty. Please add items to proceed",
         variant: "destructive",
       });
+
       return;
     }
-
-    if (currentSelectedAddress == null) {
+    if (currentSelectedAddress === null) {
       toast({
-        title: "Please one address to proceed",
+        title: "Please select one address to proceed.",
         variant: "destructive",
       });
+
       return;
     }
 
     const orderData = {
-      cartId: cartItems._id,
-      userId: user.id,
+      userId: user?.id,
+      cartId: cartItems?._id,
       cartItems: cartItems.items.map((singleCartItem) => ({
         productId: singleCartItem?.productId,
         title: singleCartItem?.title,
         image: singleCartItem?.image,
         price:
-          Number(singleCartItem?.salePrice) > 0
-            ? Number(singleCartItem?.salePrice)
-            : Number(singleCartItem?.price || 0),
+          singleCartItem?.salePrice > 0
+            ? singleCartItem?.salePrice
+            : singleCartItem?.price,
         quantity: singleCartItem?.quantity,
       })),
       addressInfo: {
@@ -70,64 +70,58 @@ function ShoppingCheckout() {
         phone: currentSelectedAddress?.phone,
         notes: currentSelectedAddress?.notes,
       },
-      orderStatus: "Pending",
-      paymentMethod: "Paypal",
-      paymentStatus: "Pending",
+      orderStatus: "pending",
+      paymentMethod: "paypal",
+      paymentStatus: "pending",
       totalAmount: totalCartAmount,
-      orderDate: new Date().toISOString(),
-      orderUpdatedAt: new Date().toISOString(),
-      orderCreatedAt: new Date().toISOString(),
+      orderDate: new Date(),
+      orderUpdateDate: new Date(),
       paymentId: "",
       payerId: "",
     };
-    console.log("Order Data:", orderData);
-    // Here, you would typically send 'orderData' to your backend to create the order
 
     dispatch(createNewOrder(orderData)).then((data) => {
-      console.log(data, "Mahir");
+      console.log(data, "sangam");
       if (data?.payload?.success) {
-        setIsPaymentStart(true);
+        setIsPaymemntStart(true);
       } else {
-        setIsPaymentStart(true);
+        setIsPaymemntStart(false);
       }
     });
   }
 
-  useEffect(() => {
-    if (approvalURL) {
-      window.location.href = approvalURL;
-    }
-  }, [approvalURL]);
+  if (approvalURL) {
+    window.location.href = approvalURL;
+  }
 
   return (
     <div className="flex flex-col">
       <div className="relative h-[300px] w-full overflow-hidden">
-        <img
-          src={img}
-          alt="Shopping Checkout"
-          className="object-center object-cover w-full h-full"
-        />
+        <img src={img} className="h-full w-full object-cover object-center" />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5 p-5">
-        <Address setCurrentSelectedAddress={setCurrentSelectedAddress} />
+        <Address
+          selectedId={currentSelectedAddress}
+          setCurrentSelectedAddress={setCurrentSelectedAddress}
+        />
         <div className="flex flex-col gap-4">
-          {cartItems && cartItems.items && cartItems.items.length > 0 ? (
-            cartItems.items.map((item) => (
-              <UserCartItemsContent key={item._id} cartItem={item} />
-            ))
-          ) : (
-            <p>Your cart is empty.</p>
-          )}
+          {cartItems && cartItems.items && cartItems.items.length > 0
+            ? cartItems.items.map((item) => (
+                <UserCartItemsContent cartItem={item} />
+              ))
+            : null}
           <div className="mt-8 space-y-4">
             <div className="flex justify-between">
-              <span className="font-bold"> Total</span>
-              <span className="font-bold"> ${totalCartAmount}</span>
+              <span className="font-bold">Total</span>
+              <span className="font-bold">${totalCartAmount}</span>
             </div>
-            <div className="mt-4 w-full">
-              <Button onClick={handleInitiatePaypalPayment} className="w-full">
-                Checkout with Paypal
-              </Button>
-            </div>
+          </div>
+          <div className="mt-4 w-full">
+            <Button onClick={handleInitiatePaypalPayment} className="w-full">
+              {isPaymentStart
+                ? "Processing Paypal Payment..."
+                : "Checkout with Paypal"}
+            </Button>
           </div>
         </div>
       </div>
