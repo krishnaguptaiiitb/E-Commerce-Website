@@ -21,7 +21,7 @@ import SearchProducts from "./pages/shopping-view/Search";
 import UnauthPage from "./pages/unauth-page/Index";
 import AuthLayout from "./components/auth/Layout";
 import AdminLayout from "./components/admin-view/AdminLayout";
-import pageNotFound from "./pages/page-not-found/PageNotFound";
+import PageNotFound from "./pages/page-not-found/PageNotFound";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -90,7 +90,7 @@ function App() {
           <Route path="search" element={<SearchProducts />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
-        <Route path="*" element={<pageNotFound />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );

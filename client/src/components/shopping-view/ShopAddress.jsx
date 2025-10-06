@@ -23,11 +23,12 @@ const initialAddressFormData = {
 function Address({ setCurrentSelectedAddress, selectedId }) {
   const [formData, setFormData] = useState(initialAddressFormData);
   const [currentEditedId, setCurrentEditedId] = useState(null);
-  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { addressList } = useSelector((state) => state.shopAddress);
-  const { toast } = useToast();
-
+  const dispatch = useDispatch();
+  const toast = useToast();
+  
+  console.log(addressList, "addressList");
   function handleManageAddress(event) {
     event.preventDefault();
 
@@ -109,22 +110,30 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
     dispatch(fetchAllAddress(user?.id));
   }, [dispatch]);
 
-  console.log(addressList, "addressList");
 
   return (
     <Card>
       <div className="mb-5 p-3 grid grid-cols-1 sm:grid-cols-2  gap-2">
-        {addressList && addressList.length > 0
-          ? addressList.map((singleAddressItem) => (
-              <AddressCard
+        {addressList && addressList.length > 0 ? (
+          <div className="mb-10 p-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {addressList.map((singleAddressItem) => (
+              <AddressCardw
                 selectedId={selectedId}
                 handleDeleteAddress={handleDeleteAddress}
                 addressInfo={singleAddressItem}
                 handleEditAddress={handleEditAddress}
                 setCurrentSelectedAddress={setCurrentSelectedAddress}
               />
-            ))
-          : null}
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-10">
+            <p className="text-lg font-bold">No Address Found</p>
+            <p className="text-sm text-gray-500 mt-1">
+              Please add an address below
+            </p>
+          </div>
+        )}
       </div>
       <CardHeader>
         <CardTitle>

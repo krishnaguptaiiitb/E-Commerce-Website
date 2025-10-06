@@ -77,7 +77,7 @@ const loginUser = async (req, res) => {
         email: checkUser.email,
         username: checkUser.username,
       },
-      "ACCESS_TOKEN_SECRET",
+      process.env.ACCESS_TOKEN_SECRET,
       {
         expiresIn: "1h",
       }
