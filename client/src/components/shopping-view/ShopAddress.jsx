@@ -27,7 +27,7 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
   const { addressList } = useSelector((state) => state.shopAddress);
   const dispatch = useDispatch();
   const toast = useToast();
-  
+
   console.log(addressList, "addressList");
   function handleManageAddress(event) {
     event.preventDefault();
@@ -110,22 +110,19 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
     dispatch(fetchAllAddress(user?.id));
   }, [dispatch]);
 
-
   return (
     <Card>
       <div className="mb-5 p-3 grid grid-cols-1 sm:grid-cols-2  gap-2">
         {addressList && addressList.length > 0 ? (
-          <div className="mb-10 p-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {addressList.map((singleAddressItem) => (
-              <AddressCardw
-                selectedId={selectedId}
-                handleDeleteAddress={handleDeleteAddress}
-                addressInfo={singleAddressItem}
-                handleEditAddress={handleEditAddress}
-                setCurrentSelectedAddress={setCurrentSelectedAddress}
-              />
-            ))}
-          </div>
+          addressList.map((singleAddressItem) => (
+            <AddressCard
+              selectedId={selectedId}
+              handleDeleteAddress={handleDeleteAddress}
+              addressInfo={singleAddressItem}
+              handleEditAddress={handleEditAddress}
+              setCurrentSelectedAddress={setCurrentSelectedAddress}
+            />
+          ))
         ) : (
           <div className="flex flex-col items-center justify-center py-10">
             <p className="text-lg font-bold">No Address Found</p>
@@ -136,7 +133,7 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
         )}
       </div>
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="font-bold">
           {currentEditedId !== null ? "Edit Address" : "Add New Address"}
         </CardTitle>
       </CardHeader>

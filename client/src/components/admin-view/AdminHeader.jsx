@@ -8,16 +8,16 @@ function AdminHeader({ setOpen }) {
   function handleLogout() {
     dispatch(logoutUser());
   }
+
   return (
     <header
-      className="flex items-center justify-center px-4 py-3 bg-background border-b
-  "
+      className="flex items-center justify-center px-4 py-3 bg-background border-b"
     >
       <Button
         onClick={() => {
           setOpen(true);
         }}
-        className="lg:hidden sm:block "
+        className="lg:hidden sm:block"
       >
         <AlignJustify />
         <span className="sr-only">Toggle Menu</span>

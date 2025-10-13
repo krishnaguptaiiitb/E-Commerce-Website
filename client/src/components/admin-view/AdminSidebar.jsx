@@ -52,6 +52,7 @@ function MenuItems({ setOpen }) {
 
 function AdminSideBar({ open, setOpen }) {
   const navigate = useNavigate();
+
   return (
     <Fragment>
       <Sheet open={open} onOpenChange={setOpen}>

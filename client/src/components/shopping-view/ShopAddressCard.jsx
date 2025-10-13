@@ -18,11 +18,11 @@ function AddressCard({
       }
       className={`cursor-pointer border-red-700 ${
         selectedId?._id === addressInfo?._id
-          ? "border-red-900 border-[4px]"
+          ? "border-red-900 border-[3px]"
           : "border-black"
       }`}
     >
-      <CardContent className="grid p-4 gap-4">
+      <CardContent className="grid p-3 gap-3">
         <Label>Address: {addressInfo?.address}</Label>
         <Label>City: {addressInfo?.city}</Label>
         <Label>pincode: {addressInfo?.pincode}</Label>
