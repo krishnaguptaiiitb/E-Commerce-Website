@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const initialState = {
   isLoading: false,
   reviews: [],
@@ -10,7 +12,7 @@ export const addReview = createAsyncThunk(
   "reviews/addReview",
   async ({ productId, userId, userName, reviewMessage, reviewValue }) => {
     const response = await axios.post(
-      `http://localhost:5000/api/shop/products/review/${productId}`,
+      `${API_URL}/api/shop/products/review/${productId}`,
       {
         userId,
         userName,
@@ -25,9 +27,7 @@ export const addReview = createAsyncThunk(
 export const getReviews = createAsyncThunk(
   "reviews/getReviews",
   async (productId) => {
-    const result = await axios.get(
-      `http://localhost:5000/api/shop/products/review/${productId}`
-    );
+    const result = await axios.get(`${API_URL}/api/shop/products/review/${productId}`);
     return result?.data;
   }
 );
@@ -41,9 +41,8 @@ const reviewSlice = createSlice({
       .addCase(addReview.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(addReview.fulfilled, (state, action) => {
+      .addCase(addReview.fulfilled, (state) => {
         state.isLoading = false;
-        // Optionally push new review or refetch all
       })
       .addCase(addReview.rejected, (state) => {
         state.isLoading = false;
