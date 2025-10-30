@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const initialState = {
   isAuthenticated: false,
   isLoading: true,
@@ -10,31 +12,23 @@ const initialState = {
 export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/auth/register",
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.post(`${API_URL}/api/auth/register`, formData, {
+      withCredentials: true,
+    });
     return response.data;
   }
 );
 
 export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
-  const response = await axios.post(
-    "http://localhost:5000/api/auth/login",
-    formData,
-    {
-      withCredentials: true,
-    }
-  );
+  const response = await axios.post(`${API_URL}/api/auth/login`, formData, {
+    withCredentials: true,
+  });
   return response.data;
 });
 
 export const logoutUser = createAsyncThunk("/auth/logout", async () => {
   const response = await axios.post(
-    "http://localhost:5000/api/auth/logout",
+    `${API_URL}/api/auth/logout`,
     {},
     {
       withCredentials: true,
@@ -44,17 +38,13 @@ export const logoutUser = createAsyncThunk("/auth/logout", async () => {
 });
 
 export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
-  const response = await axios.get(
-    "http://localhost:5000/api/auth/check-auth",
-    {
-      withCredentials: true,
-      headers: {
-        "Cache-Control":
-          "no-store, no-cache, must-revalidate, proxy-revalidate",
-        Expires: "0",
-      },
-    }
-  );
+  const response = await axios.get(`${API_URL}/api/auth/check-auth`, {
+    withCredentials: true,
+    headers: {
+      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      Expires: "0",
+    },
+  });
   return response.data;
 });
 
@@ -88,7 +78,7 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.user : null;
-        state.isAuthenticated = action.payload.success ? true : false;
+        state.isAuthenticated = !!action.payload.success;
       })
       .addCase(loginUser.rejected, (state) => {
         state.isLoading = false;
@@ -101,7 +91,7 @@ const authSlice = createSlice({
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.user : null;
-        state.isAuthenticated = action.payload.success;
+        state.isAuthenticated = !!action.payload.success;
       })
       .addCase(checkAuth.rejected, (state) => {
         state.isLoading = false;
