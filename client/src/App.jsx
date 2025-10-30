@@ -5,7 +5,7 @@ import { Skeleton } from "./components/ui/skeleton";
 import { checkAuth } from "./store/auth-slice";
 import CheckAuth from "./components/common/CheckAuth";
 import AuthLogin from "./pages/auth/login";
-import AuthRegister from "./pages/auth/Register";
+import AuthRegister from "./pages/auth/register";
 import AdminDashboard from "./pages/admin-view/Dashboard";
 import AdminProducts from "./pages/admin-view/Products";
 import AdminOrders from "./pages/admin-view/Orders";
